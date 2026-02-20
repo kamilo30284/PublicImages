@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing365 | Technological Sovereignty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --carbon-900: #050505;
+            --carbon-800: #0a0a0a;
+            --carbon-700: #121212;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #22d3ee;
+        }
+
+        body {
+            background-color: var(--carbon-900);
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Ambient Background Glows */
+        .glow-mesh {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, rgba(59, 130, 246, 0.12), transparent 50%),
+                        radial-gradient(circle at 0% 100%, rgba(34, 211, 238, 0.05), transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Components */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #fff 40%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent-blue);
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* UI Styles */
+        .ui-container {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        
+        .ui-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .ui-browser-bar {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--carbon-900); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+
+        @keyframes pulse-custom {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .animate-status { animation: pulse-custom 2s infinite; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+    </style>
+</head>
+<body>
+
+    <div class="glow-mesh"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 py-6 px-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-sm rotate-45 flex items-center justify-center">
+                <div class="w-4 h-4 bg-white -rotate-45"></div>
+            </div>
+            <span class="text-xl font-bold tracking-tighter text-white">BILLING365</span>
+        </div>
+        <div class="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+            <a href="#challenge" class="hover:text-blue-400 transition-colors">Challenge</a>
+            <a href="#sovereignty" class="hover:text-blue-400 transition-colors">Sovereignty</a>
+            <a href="#pillars" class="hover:text-blue-400 transition-colors">Pillars</a>
+            <a href="#stack" class="hover:text-blue-400 transition-colors">Stack</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="text-[9px] text-gray-500 font-bold uppercase hidden sm:block">Status: In Progress</span>
+            <div class="w-2 h-2 rounded-full bg-cyan-400 animate-status"></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen pt-40 pb-20 px-8 flex flex-col items-center text-center overflow-hidden">
+        <div class="max-w-4xl">
+            <span class="section-tag">Development Proposal</span>
+            <h1 class="text-6xl md:text-9xl font-bold leading-none mb-8 tracking-tighter text-white">
+                Billing<span class="text-gradient">365.</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-400 mb-12 font-light leading-relaxed">
+                In-house infrastructure for complete technological independence. Designed to scale, configure, and operate outside cloud service limitations.
+            </p>
+            <div class="flex justify-center space-x-4 mb-20">
+                <a href="#challenge" class="px-8 py-4 bg-blue-600 text-white font-bold rounded-sm hover:bg-blue-700 transition-all text-sm uppercase tracking-widest">
+                    View Strategy
+                </a>
+                <div class="px-8 py-4 border border-white/10 text-white font-bold rounded-sm text-sm uppercase tracking-widest">
+                    TP Global - Regional
+                </div>
+            </div>
+        </div>
+
+        <!-- Platform Screenshot Display -->
+        <div class="w-full max-w-6xl mx-auto animate-float">
+            <div class="ui-container glass-card rounded-2xl overflow-hidden border border-white/10">
+                <div class="ui-browser-bar">
+                    <div class="dot bg-red-500/50"></div>
+                    <div class="dot bg-yellow-500/50"></div>
+                    <div class="dot bg-green-500/50"></div>
+                    <div class="ml-10 flex-1 bg-black/20 rounded py-1 text-[10px] text-gray-500 font-mono text-center">
+                        billing365.internal.tpglobal.com/dashboard
+                    </div>
+                </div>
+                <!-- User Provided Image -->
+                <img src="https://github.com/kamilo30284/PublicImages/blob/main/Screenshot%202026-02-20%20111253.png?raw=true">
+</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Challenge Section -->
+    <section id="challenge" class="py-32 px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div>
+                    <span class="section-tag">The Challenge</span>
+                    <h2 class="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tighter">Strategic Friction.</h2>
+                    <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+                        Our current workflows on legacy platforms face critical bottlenecks that impact daily operations and pose risks during major infrastructure migrations.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="glass-card p-6 rounded-lg">
+                            <i class="fas fa-bolt text-blue-500 mb-4 text-xl"></i>
+                            <h4 class="text-white font-bold mb-2">Critical Latency</h4>
+                            <p class="text-gray-500 text-xs leading-normal">Workflows experiencing significant slowdowns impacting task delivery.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-lg">
+                            <i class="fas fa-file-invoice text-cyan-500 mb-4 text-xl"></i>
+                            <h4 class="text-white font-bold mb-2">Manual Friction</h4>
+                            <p class="text-gray-500 text-xs leading-normal">Complex file organization susceptible to human error.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-lg">
+                            <i class="fas fa-users-slash text-red-500 mb-4 text-xl"></i>
+                            <h4 class="text-white font-bold mb-2">User Resistance</h4>
+                            <p class="text-gray-500 text-xs leading-normal">Unintuitive interfaces increasing the learning curve for teams.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-lg">
+                            <i class="fas fa-shield-virus text-orange-500 mb-4 text-xl"></i>
+                            <h4 class="text-white font-bold mb-2">Migration Risk</h4>
+                            <p class="text-gray-500 text-xs leading-normal">Reliance on platforms restricted during future Google migrations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-blue-600/10 blur-[100px] group-hover:bg-blue-600/20 transition-all"></div>
+                    <div class="glass-card aspect-square rounded-3xl border-white/5 flex items-center justify-center p-12 relative overflow-hidden text-center">
+                        <div class="text-[200px] font-bold text-white/[0.02] absolute rotate-12">AUTONOMY</div>
+                        <div class="z-10">
+                            <i class="fas fa-microchip text-6xl text-blue-500 mb-6"></i>
+                            <h3 class="text-3xl font-bold text-white tracking-tighter italic">Proprietary</h3>
+                            <p class="text-gray-500 text-sm mt-2 uppercase tracking-widest">In-house Infrastructure</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sovereignty Section -->
+    <section id="sovereignty" class="py-32 px-8 bg-zinc-950/50">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="section-tag">The Goal</span>
+            <h2 class="text-5xl md:text-7xl font-bold text-white mb-12 tracking-tighter">Technological Sovereignty.</h2>
+            <div class="grid md:grid-cols-3 gap-12 text-left">
+                <div class="space-y-4">
+                    <div class="h-1 w-12 bg-blue-600"></div>
+                    <h3 class="text-xl font-bold text-white">Cloud Decoupling</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Full independence from Microsoft/Google environments, ensuring operational safety regardless of platform policies.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="h-1 w-12 bg-blue-600"></div>
+                    <h3 class="text-xl font-bold text-white">Strategic Anticipation</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Prepared today for tomorrow’s migration. We eliminate the panic of transition by owning the toolset.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="h-1 w-12 bg-blue-600"></div>
+                    <h3 class="text-xl font-bold text-white">Business Continuity</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Minimizing impact on current developments while building a scalable foundation for regional growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pillars Section -->
+    <section id="pillars" class="py-32 px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24">
+                <span class="section-tag">Design Pillars</span>
+                <h2 class="text-4xl font-bold text-white tracking-tighter">Engineered for Performance.</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Pillar 1 -->
+                <div class="glass-card p-10 rounded-2xl flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center text-blue-500 text-2xl mb-8 border border-blue-500/20">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Versatility</h3>
+                    <p class="text-gray-500 text-sm mb-6">Configurable by Country. A single core with multiple local regulatory and legislative configurations.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Peru (Phase I)</span>
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Colombia (Phase I)</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="glass-card p-10 rounded-2xl flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-cyan-600/10 rounded-full flex items-center justify-center text-cyan-500 text-2xl mb-8 border border-cyan-500/20">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Scalability</h3>
+                    <p class="text-gray-500 text-sm mb-6">Optimized architecture designed to scale to millions of records while maintaining consistent performance.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Multi-Tenant</span>
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Multi-Source</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="glass-card p-10 rounded-2xl flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-indigo-600/10 rounded-full flex items-center justify-center text-indigo-500 text-2xl mb-8 border border-indigo-500/20">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Maintainability</h3>
+                    <p class="text-gray-500 text-sm mb-6">Clean, modular codebase designed for adaptability and easy enterprise-level maintenance.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Modular UI</span>
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Doc Federation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section id="stack" class="py-32 px-8 bg-[#080808] border-y border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row gap-20 items-center">
+                <div class="flex-1">
+                    <span class="section-tag">The Modern Stack</span>
+                    <h2 class="text-5xl font-bold text-white mb-8 tracking-tighter">Security & Efficiency.</h2>
+                    <p class="text-gray-400 mb-12">Technology choices guided by the principles of performance and enterprise standards.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-6">
+                            <div class="text-emerald-500 font-black text-3xl">Dj</div>
+                            <div>
+                                <h4 class="text-white font-bold">Backend: Django</h4>
+                                <p class="text-gray-500 text-sm">High-security standards, rapid development cycles, and a robust ecosystem for data handling.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-6">
+                            <div class="text-red-500 font-black text-3xl">A</div>
+                            <div>
+                                <h4 class="text-white font-bold">Frontend: Angular</h4>
+                                <p class="text-gray-500 text-sm">Solid enterprise architecture featuring strict typing and modular, reusable components.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 w-full">
+                    <!-- Smaller Inline Preview -->
+                    <div class="glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl transition-transform hover:scale-[1.02]">
+                        <img src="https://github.com/kamilo30284/PublicImages/blob/main/Screenshot%202026-02-20%20121005.png?raw=true">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA / Roadmap -->
+    <section class="py-32 px-8 text-center relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-600/5 blur-[120px] -z-10"></div>
+        <div class="max-w-3xl mx-auto">
+            <span class="section-tag">Projected Timeline</span>
+            <h2 class="text-5xl font-bold text-white mb-8 tracking-tighter">+6 Months</h2>
+            <p class="text-gray-400 text-lg mb-12">
+                Billing365 represents a strategic capability, not just a software solution. It is our move toward total operational sovereignty.
+            </p>
+            <div class="inline-flex items-center space-x-3 px-8 py-4 bg-white text-black font-black uppercase text-xs tracking-widest cursor-pointer hover:bg-blue-500 hover:text-white transition-all shadow-xl shadow-white/5">
+                <span>Start Deployment</span>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-8 border-t border-white/5 bg-black">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-10">
+            <div>
+                <div class="flex items-center space-x-3 mb-4 justify-center md:justify-start">
+                    <div class="w-6 h-6 bg-blue-600 rounded-sm rotate-45"></div>
+                    <span class="text-lg font-bold tracking-tighter text-white">BILLING365</span>
+                </div>
+                <p class="text-gray-600 text-xs">TP - Process Automation Team<br/> 2026</p>
+            </div>
+            <div class="flex space-x-12 text-[10px] font-bold text-gray-700 uppercase tracking-widest">
+                <div class="flex flex-col gap-2">
+                    <span class="text-gray-500">Contact</span>
+                    <span>Juan Parra Gonzalez - Paula González Vega</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <span class="text-gray-500">Privacy</span>
+                    <span>In-house Protocol</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
