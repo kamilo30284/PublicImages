@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing365 | Technological Sovereignty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --carbon-900: #050505;
+            --carbon-800: #0a0a0a;
+            --carbon-700: #121212;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #22d3ee;
+        }
+
+        body {
+            background-color: var(--carbon-900);
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Ambient Background Glows */
+        .glow-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% -20%, rgba(59, 130, 246, 0.12), transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(34, 211, 238, 0.05), transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Components */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #fff 40%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent-blue);
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* UI Styles */
+        .ui-container {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .ui-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .ui-browser-bar {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--carbon-900);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
+        }
+
+        @keyframes pulse-custom {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .animate-status {
+            animation: pulse-custom 2s infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        canvas {
+            border: 2px solid #333;
+            display: block;
+            margin: 20px auto;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow-mesh"></div>
+
+    <!-- Navigation -->
+    <nav
+        class="fixed w-full z-50 top-0 py-6 px-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-sm rotate-45 flex items-center justify-center">
+                <div class="w-4 h-4 bg-white -rotate-45"></div>
+            </div>
+            <span class="text-xl font-bold tracking-tighter text-white">BILLING365</span>
+        </div>
+        <div class="hidden md:flex space-x-10 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+            <a href="#challenge" class="hover:text-blue-400 transition-colors">Challenge</a>
+            <a href="#sovereignty" class="hover:text-blue-400 transition-colors">Sovereignty</a>
+            <a href="#pillars" class="hover:text-blue-400 transition-colors">Pillars</a>
+            <a href="#stack" class="hover:text-blue-400 transition-colors">Stack</a>
+            <a href="#Colombia" class="hover:text-blue-400 transition-colors">Colombia</a>
+            <a href="#Peru" class="hover:text-blue-400 transition-colors">Peru</a>
+
+        </div>
+        <div class="flex items-center space-x-4">
+            <img src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Logo.png" alt="Logo" width="25px"
+                height="25px">
+            <span class="text-[9px] text-gray-500 font-bold uppercase hidden sm:block">Status: In Progress</span>
+            <div class="w-2 h-2 rounded-full bg-cyan-400 animate-status"></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen pt-40 pb-20 px-8 flex flex-col items-center text-center overflow-hidden">
+        <div class="max-w-4xl">
+            <span class="section-tag">Development Proposal</span>
+            <h1 class="text-6xl md:text-9xl font-bold leading-none mb-8 tracking-tighter text-white">
+                Billing<span class="text-gradient">365.</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-400 mb-12 font-light leading-relaxed">
+                In-house infrastructure for complete technological independence. Designed to scale, configure, and
+                operate outside cloud service limitations.
+            </p>
+            <div class="flex justify-center space-x-4 mb-20">
+                <a href="#challenge"
+                    class="px-2 py-4 bg-blue-600 text-white font-bold rounded-sm hover:bg-blue-700 transition-all text-sm uppercase tracking-widest">
+                    View Strategy
+                </a>
+                <div
+                    class="px-8 py-4 border border-white/10 text-white font-bold rounded-sm text-sm uppercase tracking-widest">
+                    TP Global - Regional
+                </div>
+            </div>
+
+
+            <video class="w-100 d-block" preload="auto" autoplay="" loop="" muted="" playsinline="">
+                <source
+                    src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/banner_hero_motion_d_feb2026_low.mp4"
+                    type="video/mp4">
+            </video>
+        </div>
+
+        <!-- knowing the Process Section -->
+        <section id="sovereignty" class="py-20 px-8 bg-zinc-950/50">
+            <div class="max-w-7xl mx-auto text-center">
+                <span class="section-tag">Billing 365</span>
+                <h2 class="text-5xl md:text-7xl font-bold text-white mb-12 tracking-tighter">Knowing the Porcess</h2>
+                <div class="grid md:grid-cols-3 gap-12 text-left">
+                    <div class="space-y-4">
+                        <div class="h-1 w-12 bg-blue-600"></div>
+                        <h3 class="text-xl font-bold text-white">Global Solution</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Our vision for the billing ecosystem focuses on
+                            the comprehensive mastery of the financial lifecycle. We understand this process not merely
+                            as the issuance of documents, but as a seamless orchestration spanning from provisions
+                            (Unbilled)
+                            management to invoices. We are structuring this model to serve as a natural extension of our
+                            current infrastructure, ensuring that operational control and regional regulatory compliance
+                            remain the core pillars supporting every transaction
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="h-1 w-12 bg-blue-600"></div>
+                        <h3 class="text-xl font-bold text-white">Regulatory Compliance Alignment</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">The process of converting a provision into an
+                            invoice must comply with specific tax requirements (such as those of the DIAN in Colombia or
+                            the SUNAT in Peru). This highlights that the system automatically understands the
+                            validation, tax, and electronic invoicing rules of each region</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="h-1 w-12 bg-blue-600"></div>
+                        <h3 class="text-xl font-bold text-white">End-to-End Traceability</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">It's not just about creating a provision; it's
+                            about knowing exactly where it comes from and which invoice it ends up on.
+
+                            Ensuring that every accounting provision has a clear path to becoming a legally binding
+                            invoice prevents revenue leakage and ensures that no outstanding provisions remain in the
+                            staging tables</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <div id="Peru" class="flex flex-col justify-center items-center w-full mb-21">
+            <div class="relative flex items-center w-[80%] mb-4">
+                <button id="btnPlayPeru"
+                    class="absolute left-0 flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-full p-2 transition-all shadow-lg shadow-blue-500/20 active:scale-95 z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </button>
+
+                <div class="w-full text-center">
+                    <span class="section-tag">Power App Demo</span>
+                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-9 tracking-tighter">Unbilled
+                        Porcess in Peru</h2>
+                    <!--span class="section-tag">Unbilled Process in Peru</span-->
+                </div>
+            </div>
+            <canvas id="miAnimacion" width="1050" height="500"
+                class="block border-2 border-gray-800 rounded-2xl shadow-lg max-w-full h-auto">
+
+                <script>
+                    (function () {
+                        const canvas = document.getElementById('miAnimacion');
+                        const ctx = canvas.getContext('2d');
+                        const btnPlayPeru = document.getElementById('btnPlayPeru');
+
+                        const fuentes = [
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva1.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva2.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva3.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva4.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva5.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva6.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva7.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva8.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva9.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva10.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva11.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva12.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva13.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva14.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva15.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva16.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva17.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva18.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva19.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva20.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva21.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva22.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva23.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva24.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva25.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva26.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva27.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva28.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva29.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva30.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva31.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva32.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva33.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva34.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva35.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva36.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva37.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva38.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva39.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva40.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva41.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva42.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva43.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva44.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva45.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva46.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva47.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva48.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva49.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva50.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva51.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva52.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva53.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva54.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva55.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva56.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva57.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva58.png',
+                            'https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Canva59.png'
+                        ];
+
+                        let imagenes = [];
+                        let imagenesCargadas = 0;
+                        let indiceActual = 0;
+                        let timer; // Variable para controlar el timeout
+
+                        fuentes.forEach((src, index) => {
+                            const img = new Image();
+                            img.crossOrigin = "anonymous"; // Importante para GitHub Raw
+                            img.src = src;
+                            img.onload = () => {
+                                imagenes[index] = img;
+                                imagenesCargadas++;
+                                if (index === 0) ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                                if (imagenesCargadas === fuentes.length) {
+                                    animar();
+                                }
+                            };
+                        });
+
+                        function animar() {
+                            if (imagenes.length === 0) return;
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            const img = imagenes[indiceActual];
+                            if (img) {
+                                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            }
+                            indiceActual = (indiceActual + 1) % imagenes.length;
+
+                            timer = setTimeout(() => {
+                                requestAnimationFrame(animar);
+                            }, 2000);
+                        }
+
+                        // Lógica del botón de Perú
+                        btnPlayPeru.addEventListener('click', () => {
+                            clearTimeout(timer); // Detener animación actual
+                            indiceActual = 0;    // Resetear al inicio
+                            animar();            // Re-arrancar
+                        });
+                    })();
+                </script>
+        </div>
+        <br><br>
+
+        <!-- Colombia Section -->
+        <div id="Colombia" class="flex flex-col justify-center items-center w-full mb-21">
+
+            <div class="relative flex items-center w-[80%] mb-4">
+                <button id="btnPlayCol"
+                    class="absolute left-0 flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-full p-2 transition-all shadow-lg shadow-blue-500/20 active:scale-95 z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </button>
+
+                <div class="w-full text-center">
+                    <span class="section-tag">Power App Demo</span>
+                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-9 tracking-tighter">Billing Process in
+                        Colombia</h2>
+                </div>
+            </div>
+            <canvas id="colombiaAnimacion" width="1050" height="500"
+                class="block border-2 border-blue-500/30 rounded-2xl shadow-[0_0_50px_-12px_rgba(59,130,246,0.3)] max-w-[95%] h-auto bg-black/40">
+
+
+            </canvas>
+
+            <script>
+                (function () {
+                    const canvasCol = document.getElementById('colombiaAnimacion');
+                    const ctxCol = canvasCol.getContext('2d');
+                    const btnPlayCol = document.getElementById('btnPlayCol');
+
+                    const baseURL = "https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Colombia";
+                    const imagesCol = [];
+                    let imagesLoadedCol = 0;
+                    let currentIndexCol = 0;
+                    let animationTimeout; // Para controlar el flujo del tiempo
+
+                    const existingIndices = [];
+                    for (let i = 1; i <= 90; i++) {
+                        if (i >= 20 && i <= 30) continue;
+                        existingIndices.push(i);
+                    }
+
+                    const totalImagesCount = existingIndices.length;
+
+                    existingIndices.forEach((imgNum, index) => {
+                        const img = new Image();
+                        img.crossOrigin = "anonymous";
+                        img.src = `${baseURL}/${imgNum}.png`;
+
+                        img.onload = () => {
+                            imagesCol[index] = img;
+                            imagesLoadedCol++;
+
+                            if (index === 0) {
+                                ctxCol.drawImage(img, 0, 0, canvasCol.width, canvasCol.height);
+                            }
+
+                            if (imagesLoadedCol === totalImagesCount) {
+                                animateCol();
+                            }
+                        };
+
+                        img.onerror = () => {
+                            console.error("No se encontró en GitHub: " + img.src);
+                            imagesLoadedCol++;
+                            if (imagesLoadedCol === totalImagesCount) animateCol();
+                        };
+                    });
+
+                    function animateCol() {
+                        if (imagesCol.length === 0) return;
+
+                        ctxCol.clearRect(0, 0, canvasCol.width, canvasCol.height);
+                        const img = imagesCol[currentIndexCol];
+
+                        if (img) {
+                            ctxCol.drawImage(img, 0, 0, canvasCol.width, canvasCol.height);
+                        }
+
+                        currentIndexCol = (currentIndexCol + 1) % totalImagesCount;
+
+                        // Guardamos el timeout en una variable para poder resetearlo
+                        animationTimeout = setTimeout(() => {
+                            requestAnimationFrame(animateCol);
+                        }, 2000);
+                    }
+
+                    // FUNCIÓN DEL BOTÓN PLAY
+                    btnPlayCol.addEventListener('click', () => {
+                        // 1. Limpiamos cualquier espera de animación actual
+                        clearTimeout(animationTimeout);
+
+                        // 2. Reiniciamos el índice a 0
+                        currentIndexCol = 0;
+
+                        // 3. Volvemos a llamar a la animación
+                        animateCol();
+
+                        console.log("Animación reiniciada desde el cuadro 1");
+                    });
+                })();
+            </script>
+        </div>
+        <!-- Colombia Section - JORGE
+        <div id="Colombia" class="flex flex-col justify-center items-center w-full mb-32">
+            <span class="section-tag mb-4">Implementation: Colombia</span>
+            <canvas id="colombiaAnimacion" width="1050" height="500"
+                class="block border-2 border-blue-500/30 rounded-2xl shadow-[0_0_50px_-12px_rgba(59,130,246,0.3)] max-w-full h-auto bg-black/40">
+            </canvas>
+            <script>
+                (function () {
+                    const canvasCol = document.getElementById('colombiaAnimacion');
+                    const ctxCol = canvasCol.getContext('2d');
+
+                    // 90 images in ProcesoBilling365_COL directory (1.png to 90.png)
+                    const totalImages = 90;
+                    const imagesCol = [];
+                    let imagesLoadedCol = 0;
+                    let currentIndexCol = 0;
+
+                    // Load images from local directory
+                    const existingIndices = [];
+                    for (let i = 1; i <= 90; i++) {
+                        if (i >= 20 && i <= 30) continue; // Skip deleted images
+                        existingIndices.push(i);
+                    }
+
+                    const totalImagesCount = existingIndices.length;
+
+                    existingIndices.forEach((imgNum, index) => {
+                        const img = new Image();
+                        // Cache-busting to ensure new images are loaded
+                        img.src = `ProcesoBilling365_COL/${imgNum}.png?v=${new Date().getTime()}`;
+                        img.onload = () => {
+                            imagesCol[index] = img;
+                            imagesLoadedCol++;
+                            if (imagesLoadedCol === totalImagesCount) {
+                                requestAnimationFrame(animateCol);
+                            }
+                        };
+                    });
+
+                    function animateCol() {
+                        // Clear and draw
+                        ctxCol.clearRect(0, 0, canvasCol.width, canvasCol.height);
+                        const img = imagesCol[currentIndexCol];
+                        if (img) {
+                            ctxCol.drawImage(img, 0, 0, canvasCol.width, canvasCol.height);
+                        }
+
+                        // Next index
+                        currentIndexCol = (currentIndexCol + 1) % totalImagesCount;
+
+                        // Faster cycle for smooth video-like effect (e.g. 100ms per frame)
+                        setTimeout(() => {
+                            requestAnimationFrame(animateCol);
+                        }, 2500);
+                    }
+                })();
+            </script>
+        </div>
+    -->
+        <br>
+
+        <div class="w-full text-center">
+            <span class="section-tag">New Process</span>
+            <h2 class="text-6xl md:text-4xl font-bold text-white mb-8 tracking-tighter">TO BE</h2>
+        </div>
+        <div
+            class="flex flex-col gap-0 items-center border-2 border-blue-500/30 rounded-2xl overflow-hidden shadow-[0_0_50px_-12px_rgba(59,130,246,0.3)] w-[95%] mx-auto bg-black/40">
+            <img src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/PC1.png"
+                class="w-full h-auto block object-contain">
+            <img src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/PC2.png"
+                class="w-full h-auto block object-contain">
+        </div>
+
+
+        <!-- Platform Screenshot Display 
+        <div class="w-full max-w-6xl mx-auto animate-float">
+            <div class="ui-container glass-card rounded-2xl overflow-hidden border border-white/10">
+                <div class="ui-browser-bar">
+                    <div class="dot bg-red-500/50"></div>
+                    <div class="dot bg-yellow-500/50"></div>
+                    <div class="dot bg-green-500/50"></div>
+                    <div class="ml-10 flex-1 bg-black/20 rounded py-1 text-[10px] text-gray-500 font-mono text-center">
+                        billing365.internal.tpglobal.com/dashboard
+                    </div>
+                </div>
+                //User Provided Image 
+                <img
+                    src="https://github.com/kamilo30284/PublicImages/blob/main/Screenshot%202026-02-20%20111253.png?raw=true">
+            </div>
+        </div>
+        </div>
+        -->
+    </header>
+
+    <!-- Challenge Section -->
+    <section id="challenge" class="py-25 px-3">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-1 gap-10 items-center">
+                <div>
+                    <span class="section-tag">The Challenge</span>
+                    <h2 class="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tighter">Strategic Friction.</h2>
+                    <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+                        Our current workflows on legacy platforms face critical bottlenecks that impact daily operations
+                        and pose risks during major infrastructure migrations.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="glass-card p-6 rounded-lg">
+                            <i class="fas fa-bolt text-blue-500 mb-4 text-xl"></i>
+                            <h4 class="text-white font-bold mb-2">Critical Latency</h4>
+                            <p class="text-gray-500 text-x leading-normal">Workflows experiencing significant slowdowns
+                                impacting task delivery.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-lg">
+                            <i class="fas fa-file-invoice text-cyan-500 mb-4 text-xl"></i>
+                            <h4 class="text-white font-bold mb-2">Manual Friction</h4>
+                            <p class="text-gray-500 text-x leading-normal">Complex file organization susceptible to
+                                human error.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-lg">
+                            <i class="fas fa-users-slash text-red-500 mb-4 text-xl"></i>
+                            <h4 class="text-white font-bold mb-2">User Resistance</h4>
+                            <p class="text-gray-500 text-x leading-normal">Unintuitive interfaces increasing the
+                                learning curve for teams.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-lg">
+                            <i class="fas fa-shield-virus text-orange-500 mb-4 text-xl"></i>
+                            <h4 class="text-white font-bold mb-2">Migration Risk</h4>
+                            <p class="text-gray-500 text-x leading-normal">Reliance on platforms restricted during
+                                future Google migrations.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--div class="relative group">
+                    <div class="absolute inset-0 bg-blue-600/10 blur-[100px] group-hover:bg-blue-600/20 transition-all">
+                    </div>
+                    <div
+                        class="glass-card aspect-square rounded-3xl border-white/5 flex items-center justify-center p-12 relative overflow-hidden text-center">
+                        <div class="text-[200px] font-bold text-white/[0.02] absolute rotate-12">AUTONOMY</div>
+                        <div class="z-10">
+
+                            <i class="fas fa-microchip text-6xl text-blue-500 mb-6"></i>
+                            <h3 class="text-3xl font-bold text-white tracking-tighter italic">Proprietary</h3>
+                            <p class="text-gray-500 text-sm mt-2 uppercase tracking-widest">In-house Infrastructure</p>
+                        </div>
+                    </div>
+                </div-->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sovereignty Section -->
+    <section id="sovereignty" class="py-28 px-3 bg-zinc-950/50">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="section-tag">The Goal</span>
+            <h2 class="text-5xl md:text-7xl font-bold text-white mb-12 tracking-tighter">Technological Sovereignty.</h2>
+            <div class="grid md:grid-cols-3 gap-12 text-left">
+                <div class="space-y-4">
+                    <div class="h-1 w-12 bg-blue-600"></div>
+                    <h3 class="text-xl font-bold text-white">Cloud Decoupling</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Full independence from Microsoft/Google
+                        environments, ensuring operational safety regardless of platform policies.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="h-1 w-12 bg-blue-600"></div>
+                    <h3 class="text-xl font-bold text-white">Strategic Anticipation</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Prepared today for tomorrow’s migration. We
+                        eliminate the panic of transition by owning the toolset.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="h-1 w-12 bg-blue-600"></div>
+                    <h3 class="text-xl font-bold text-white">Business Continuity</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Minimizing impact on current developments while
+                        building a scalable foundation for regional growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pillars Section -->
+    <section id="pillars" class="py-28 px-3">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24">
+                <span class="section-tag">Design Pillars</span>
+                <h2 class="text-4xl font-bold text-white tracking-tighter">Engineered for Performance.</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Pillar 1 -->
+                <div class="glass-card p-10 rounded-2xl flex flex-col items-center text-center">
+                    <div
+                        class="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center text-blue-500 text-2xl mb-8 border border-blue-500/20">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Versatility</h3>
+                    <p class="text-gray-500 text-sm mb-6">Configurable by Country. A single core with multiple local
+                        regulatory and legislative configurations.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Peru (Phase I)</span>
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Colombia (Phase I)</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="glass-card p-10 rounded-2xl flex flex-col items-center text-center">
+                    <div
+                        class="w-16 h-16 bg-cyan-600/10 rounded-full flex items-center justify-center text-cyan-500 text-2xl mb-8 border border-cyan-500/20">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Scalability</h3>
+                    <p class="text-gray-500 text-sm mb-6">Optimized architecture designed to scale to millions of
+                        records while maintaining consistent performance.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Multi-Tenant</span>
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Multi-Source</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="glass-card p-10 rounded-2xl flex flex-col items-center text-center">
+                    <div
+                        class="w-16 h-16 bg-indigo-600/10 rounded-full flex items-center justify-center text-indigo-500 text-2xl mb-8 border border-indigo-500/20">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Maintainability</h3>
+                    <p class="text-gray-500 text-sm mb-6">Clean, modular codebase designed for adaptability and easy
+                        enterprise-level maintenance.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Modular UI</span>
+                        <span class="px-3 py-1 bg-white/5 text-[10px] text-gray-400 rounded">Doc Federation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section id="stack" class="py-28 px-8 bg-[#080808] border-y border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row gap-20 items-center">
+                <div class="flex-1">
+                    <span class="section-tag">The Modern Stack</span>
+                    <h2 class="text-5xl font-bold text-white mb-8 tracking-tighter">Security & Efficiency.</h2>
+                    <p class="text-gray-400 mb-12">Technology choices guided by the principles of performance and
+                        enterprise standards.</p>
+
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-6">
+                            <div class="text-emerald-500 font-black text-3xl">Dj</div>
+                            <div>
+                                <h4 class="text-white font-bold">Backend: Django</h4>
+                                <p class="text-gray-500 text-sm">High-security standards, rapid development cycles, and
+                                    a robust ecosystem for data handling.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-6">
+                            <div class="text-red-500 font-black text-3xl">A</div>
+                            <div>
+                                <h4 class="text-white font-bold">Frontend: Angular</h4>
+                                <p class="text-gray-500 text-sm">Solid enterprise architecture featuring strict typing
+                                    and modular, reusable components.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 w-full">
+                    <!-- Smaller Inline Preview -->
+                    <div
+                        class="glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl transition-transform hover:scale-[1.02]">
+                        <img
+                            src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/ingenieriaSotfware.png">
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </section>
+    <br><br>
+    <div class="max-w-3xl mx-auto">
+        <span class="section-tag">Statistics</span>
+        <h2 class="text-5xl font-bold text-white mb-8 tracking-tighter">Financial Dashboard</h2>
+    </div>
+    <section class="py-28px-8 flex justify-center items-center relative overflow-hidden">
+
+        <img src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Dashboard.png"
+            class="max-w-4xl w-full h-auto block object-contain shadow-2xl rounded-xl">
+    </section>
+    <!-- Final CTA / Roadmap -->
+    <section class="py-24 px-8 text-center relative overflow-hidden">
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-600/5 blur-[120px] -z-10">
+        </div>
+        <div class="max-w-3xl mx-auto">
+            <span class="section-tag">Projected Timeline</span>
+            <h2 class="text-5xl font-bold text-white mb-8 tracking-tighter">+6 Months</h2>
+            <p class="text-gray-400 text-lg mb-12">
+                Billing365 represents a strategic capability, not just a software solution. It is our move toward total
+                operational sovereignty.
+            </p>
+            <div
+                class="inline-flex items-center space-x-3 px-8 py-4 bg-white text-black font-black uppercase text-xs tracking-widest cursor-pointer hover:bg-blue-500 hover:text-white transition-all shadow-xl shadow-white/5">
+                <span>Start Deployment</span>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </div>
+
+    </section>
+    <video class="w-100 d-block" preload="auto" autoplay="" loop="" muted="" playsinline="">
+        <source src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/banner_low.mp4" type="video/mp4">
+    </video>
+    <!-- Footer -->
+    <footer class="py-4  px-8 border-t border-white/5 bg-black">
+        <div
+            class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-10">
+            <div>
+                <div class="flex items-center space-x-3 mb-4 justify-center md:justify-start">
+                    <div class="w-6 h-6 bg-blue-600 rounded-sm rotate-45"></div>
+                    <span class="text-lg font-bold tracking-tighter text-white">BILLING365</span>
+                </div>
+                <p class="text-gray-600 text-xs">TP - Process Automation Team<br /> 2026</p>
+            </div>
+            <div class="flex space-x-12 text-[10px] font-bold text-gray-700 uppercase tracking-widest">
+                <div class="flex flex-col gap-2">
+                    <span class="text-gray-500">Contact</span>
+                    <span>Paula González Vega</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <span class="text-gray-500">Privacy</span>
+                    <span>In-house Development</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
