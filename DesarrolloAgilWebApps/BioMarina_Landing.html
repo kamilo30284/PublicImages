@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioMarina — Catálogo de Especies Marinas</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ocean-deep: #021B2E;
+  --ocean-mid: #064663;
+  --ocean-light: #0A7090;
+  --teal: #00C2A8;
+  --teal-glow: rgba(0,194,168,0.15);
+  --sand: #F5EDD8;
+  --sand-muted: #C4B99A;
+  --white: #FFFFFF;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(0,194,168,0.2);
+  --text-primary: #F0F7FF;
+  --text-secondary: #8BBDD9;
+  --text-muted: #4A7A96;
+  --accent: #FF7043;
+  --success: #00E676;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ocean-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── TOPBAR ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(2,27,46,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--teal);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-logo span { color: var(--sand); }
+
+.nav-links {
+  display: flex;
+  gap: 0;
+  list-style: none;
+}
+
+.nav-links a {
+  display: block;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover {
+  color: var(--teal);
+  background: var(--teal-glow);
+}
+
+/* ── HERO ── */
+#inicio {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 7rem 2rem 4rem;
+}
+
+.ocean-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 120%, rgba(6,70,99,0.8) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 30%, rgba(0,194,168,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 20% 60%, rgba(0,100,150,0.1) 0%, transparent 60%),
+    var(--ocean-deep);
+}
+
+/* Animated particles */
+.particles { position:absolute; inset:0; pointer-events:none; }
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--teal);
+  opacity: 0;
+  animation: float-up linear infinite;
+}
+@keyframes float-up {
+  0% { transform: translateY(0) scale(0); opacity:0; }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.1; }
+  100% { transform: translateY(-100vh) scale(1); opacity:0; }
+}
+
+.hero-content {
+  position: relative;
+  max-width: 960px;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--teal-glow);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  padding: 0.35rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1.5rem;
+  animation: fadeInDown 0.8s ease both;
+}
+.hero-badge::before {
+  content:'';
+  width: 6px; height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  animation: fadeInDown 0.8s 0.1s ease both;
+}
+h1 .accent { color: var(--teal); }
+
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 1.5rem auto 2.5rem;
+  font-weight: 300;
+  animation: fadeInDown 0.8s 0.2s ease both;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.8s 0.3s ease both;
+}
+
+.stat-pill {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 0.8rem 1.5rem;
+  text-align: center;
+}
+.stat-pill .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--teal);
+  display: block;
+  line-height: 1;
+}
+.stat-pill .label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s 0.4s ease both;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--teal);
+  color: var(--ocean-deep);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.85rem 2rem;
+  border-radius: 10px;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(0,194,168,0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,194,168,0.45); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.85rem 2rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.btn-secondary:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-glow); }
+
+/* ── SECTION COMMON ── */
+section { padding: 6rem 2rem; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+}
+.section-label::before {
+  content:'';
+  width: 28px; height: 1.5px;
+  background: var(--teal);
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid rgba(0,194,168,0.1);
+  margin: 0;
+}
+
+/* ── VISION GENERAL ── */
+#vision { background: var(--ocean-deep); }
+
+.vision-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.8rem;
+  transition: border-color 0.3s, background 0.3s;
+}
+.card:hover { border-color: rgba(0,194,168,0.4); background: rgba(0,194,168,0.04); }
+
+.card-wide { grid-column: 1/-1; }
+
+.card-icon {
+  width: 44px; height: 44px;
+  background: var(--teal-glow);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.card h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  margin-bottom: 0.6rem;
+}
+
+.card p, .card li {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.card ul { list-style: none; padding: 0; }
+.card li { padding: 0.2rem 0; }
+.card li::before { content: '→ '; color: var(--teal); font-size: 0.8rem; }
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+.tech-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  background: rgba(0,194,168,0.1);
+  border: 1px solid rgba(0,194,168,0.25);
+  color: var(--teal);
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+}
+
+/* Team */
+.team-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+}
+.team-member {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  flex: 1;
+  min-width: 200px;
+}
+.avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--ocean-mid);
+  border: 2px solid var(--teal);
+  display: flex; align-items:center; justify-content:center;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  color: var(--teal);
+  flex-shrink: 0;
+}
+.member-info .name { font-size: 0.82rem; font-weight: 600; }
+.member-info .role {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Features */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* ── SCRUM RESULTS ── */
+#scrum {
+  background: linear-gradient(180deg, var(--ocean-deep) 0%, rgba(6,70,99,0.2) 100%);
+}
+
+.sprints-table-wrap {
+  overflow-x: auto;
+  margin-top: 2rem;
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+thead th {
+  background: rgba(0,194,168,0.08);
+  padding: 0.85rem 1.2rem;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  border-bottom: 1px solid var(--glass-border);
+}
+tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: rgba(0,194,168,0.03); }
+tbody td {
+  padding: 0.9rem 1.2rem;
+  color: var(--text-secondary);
+}
+tbody td:first-child { color: var(--text-primary); font-weight: 500; }
+.success-badge {
+  display: inline-block;
+  background: rgba(0,230,118,0.12);
+  border: 1px solid rgba(0,230,118,0.3);
+  color: var(--success);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.65rem;
+}
+.scope-badge {
+  display: inline-block;
+  background: rgba(255,112,67,0.12);
+  border: 1px solid rgba(255,112,67,0.3);
+  color: var(--accent);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.65rem;
+}
+
+/* Charts */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.chart-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.8rem;
+}
+
+.chart-card h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1.5rem;
+}
+
+/* Bar chart styles */
+.bar-chart { display: flex; flex-direction: column; gap: 0.7rem; }
+.bar-row { display: flex; align-items: center; gap: 0.75rem; }
+.bar-label { font-size: 0.75rem; color: var(--text-secondary); width: 56px; flex-shrink:0; text-align:right; }
+.bar-wrap { flex: 1; display: flex; align-items: center; gap: 0.5rem; }
+.bar {
+  height: 22px;
+  border-radius: 6px;
+  position: relative;
+  transition: width 1s cubic-bezier(0.4,0,0.2,1);
+}
+.bar-committed { background: rgba(0,194,168,0.3); border: 1px solid rgba(0,194,168,0.5); }
+.bar-completed { background: var(--teal); }
+.bar-val { font-size: 0.75rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+
+/* Burndown consolidated */
+.burndown-svg { width: 100%; height: 220px; }
+
+/* Retro cards */
+.retro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+.retro-card {
+  border-radius: 12px;
+  padding: 1.4rem;
+  border: 1px solid;
+}
+.retro-card.strength {
+  background: rgba(0,230,118,0.04);
+  border-color: rgba(0,230,118,0.2);
+}
+.retro-card.improve {
+  background: rgba(255,112,67,0.04);
+  border-color: rgba(255,112,67,0.2);
+}
+.retro-card h4 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.retro-card.strength h4 { color: var(--success); }
+.retro-card.improve h4 { color: var(--accent); }
+.retro-card ul { list-style: none; }
+.retro-card li {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.retro-card li:last-child { border-bottom: none; }
+
+/* Sprint tabs */
+.sprint-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.sprint-tab {
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sprint-tab.active { background: var(--teal); color: var(--ocean-deep); border-color: var(--teal); font-weight: 700; }
+.sprint-tab:hover:not(.active) { border-color: var(--teal); color: var(--teal); }
+
+.sprint-detail { display: none; }
+.sprint-detail.active { display: block; }
+
+/* ── VELOCITY ── */
+#velocity { background: var(--ocean-deep); }
+
+.velocity-chart-wrap {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+/* ── CONCLUSIONS ── */
+#conclusiones {
+  background: linear-gradient(180deg, rgba(6,70,99,0.15) 0%, var(--ocean-deep) 100%);
+}
+
+.conclusions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+.conclusion-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.8rem;
+  position: relative;
+  overflow: hidden;
+}
+.conclusion-card::before {
+  content: attr(data-num);
+  position: absolute;
+  top: -10px; right: 16px;
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(0,194,168,0.06);
+  line-height: 1;
+  pointer-events: none;
+}
+.conclusion-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+.conclusion-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; }
+
+/* ── FOOTER ── */
+footer {
+  background: rgba(0,0,0,0.3);
+  border-top: 1px solid var(--glass-border);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+footer p { font-size: 0.8rem; color: var(--text-muted); }
+footer strong { color: var(--teal); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeInDown {
+  from { opacity:0; transform: translateY(-20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform: translateY(20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Scroll to top */
+.scroll-top {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: 42px; height: 42px;
+  background: var(--teal);
+  color: var(--ocean-deep);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.2s;
+  z-index: 50;
+}
+.scroll-top.visible { opacity: 1; }
+.scroll-top:hover { transform: scale(1.1); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vision-grid, .features-grid, .charts-row, .retro-grid, .conclusions-grid {
+    grid-template-columns: 1fr;
+  }
+  .card-wide { grid-column: 1; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav>
+  <a href="#inicio" class="nav-logo">Bio<span>Marina</span></a>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#vision">Visión</a></li>
+    <li><a href="#scrum">Sprints</a></li>
+    <li><a href="#velocity">Velocidad</a></li>
+    <li><a href="#conclusiones">Conclusiones</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="ocean-bg"></div>
+  <div class="particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Universidad del Magdalena · Especialización en Desarrollo de Software · 2025</div>
+    <h1>Bio<span class="accent">Marina</span></h1>
+    <p class="hero-sub">Plataforma web de catálogo de especies marinas del Caribe colombiano. Desarrollada bajo marco Scrum en 5 sprints.</p>
+    <div class="hero-stats">
+      <div class="stat-pill"><span class="num">74</span><span class="label">Items Done</span></div>
+      <div class="stat-pill"><span class="num">203</span><span class="label">Story Points</span></div>
+      <div class="stat-pill"><span class="num">5/5</span><span class="label">Sprints OK</span></div>
+      <div class="stat-pill"><span class="num">100%</span><span class="label">Tasa Éxito</span></div>
+    </div>
+    <div class="hero-ctas">
+      <a href="https://bio-marina-ui.vercel.app/" target="_blank" class="btn-primary">🌊 Ver Demo en Vivo</a>
+      <a href="#vision" class="btn-secondary">Explorar Proyecto ↓</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- VISIÓN GENERAL -->
+<section id="vision">
+  <div class="section-inner">
+    <div class="section-label">01 — Visión General</div>
+    <h2>Proyecto BioMarina</h2>
+
+    <div class="vision-grid">
+      <!-- Descripción -->
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3>Descripción</h3>
+        <p>Aplicación web de catálogo que permite consultar fichas técnicas de <strong>50 especies de peces marinos</strong>. Incluye módulo de búsqueda con filtros, panel de administración, API REST documentada, visualización en mapa interactivo y exportación de reportes.</p>
+      </div>
+
+      <!-- Stack -->
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <h3>Stack Tecnológico</h3>
+        <p style="margin-bottom:0.75rem">Arquitectura desacoplada FE/BE con integración externa y base de datos relacional.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">Vue.js</span>
+          <span class="tech-tag">NestJS</span>
+          <span class="tech-tag">GraphQL</span>
+          <span class="tech-tag">MongoDB</span>
+          <span class="tech-tag">Azure DevOps</span>
+          <span class="tech-tag">Leaflet.js</span>
+          <span class="tech-tag">jsPDF</span>
+          <span class="tech-tag">SheetJS</span>
+          <span class="tech-tag">FishBase API</span>
+          <span class="tech-tag">JWT / bcrypt</span>
+        </div>
+      </div>
+
+      <!-- Alcance -->
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3>Alcance del MVP</h3>
+        <ul>
+          <li>Catálogo de especies con búsqueda y filtros</li>
+          <li>Mapas con clustering Leaflet.js</li>
+          <li>Exportación PDF / Excel / CSV</li>
+          <li>Registro y autenticación con roles</li>
+          <li>Integración FishBase (validación científica)</li>
+          <li>Panel administrativo CRUD</li>
+          <li>Accesibilidad WCAG 2.1 AA</li>
+        </ul>
+      </div>
+
+      <!-- Funcionalidades -->
+      <div class="card">
+        <div class="card-icon">✨</div>
+        <h3>Funcionalidades Destacadas</h3>
+        <ul>
+          <li>Badge "Validado por FishBase" ≥ 95% coincidencia</li>
+          <li>Score Lighthouse 92/100</li>
+          <li>0 errores críticos axe DevTools</li>
+          <li>Navegación por teclado y ARIA</li>
+          <li>Redireccionamiento automático por rol</li>
+          <li>Activación de cuenta por token JWT</li>
+        </ul>
+      </div>
+
+      <!-- Equipo -->
+      <div class="card card-wide">
+        <div class="card-icon">👥</div>
+        <h3>Equipo de Desarrollo</h3>
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="avatar">AC</div>
+            <div class="member-info">
+              <div class="name">Anderson Castro Blanco</div>
+              <div class="role">Product Owner · Backend Lead / Auth</div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="avatar">RA</div>
+            <div class="member-info">
+              <div class="name">Ramon Armando Acuña Serna</div>
+              <div class="role">Developer · Gerente / PM / Frontend</div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="avatar">LM</div>
+            <div class="member-info">
+              <div class="name">Luis Mateo Nieto Vargas</div>
+              <div class="role">Developer · QA / Frontend / Docs</div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="avatar">DJ</div>
+            <div class="member-info">
+              <div class="name">Daniel José Lobo Ramos</div>
+              <div class="role">Developer · Data / Backend / GraphQL</div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="avatar">JC</div>
+            <div class="member-info">
+              <div class="name">Juan Camilo Parra González</div>
+              <div class="role">Scrum Master · Frontend / UI / UX</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SCRUM RESULTS -->
+<section id="scrum">
+  <div class="section-inner">
+    <div class="section-label">02 — Resultados Scrum</div>
+    <h2>Sprints 1 – 5</h2>
+
+    <!-- Summary table -->
+    <div class="sprints-table-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Sprint</th>
+            <th>Items Comp. / Plan.</th>
+            <th>Story Points</th>
+            <th>Velocidad</th>
+            <th>Scope Creep</th>
+            <th>Éxito</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sprint 1 — UI/UX e Infraestructura</td>
+            <td>12 / 12</td>
+            <td>34 SP</td>
+            <td>3.0 i/h</td>
+            <td>No</td>
+            <td><span class="success-badge">100%</span></td>
+          </tr>
+          <tr>
+            <td>Sprint 2 — CRUD Usuarios</td>
+            <td>13 / 11 <span style="color:var(--accent);font-size:0.75rem">+2</span></td>
+            <td>37 SP</td>
+            <td>3.25 i/h</td>
+            <td><span class="scope-badge">Sí</span></td>
+            <td><span class="success-badge">100%</span></td>
+          </tr>
+          <tr>
+            <td>Sprint 3 — FrontEnd + Sincronización</td>
+            <td>14 / 14</td>
+            <td>39 SP</td>
+            <td>3.5 i/h</td>
+            <td>No</td>
+            <td><span class="success-badge">100%</span></td>
+          </tr>
+          <tr>
+            <td>Sprint 4 — Exportación + Registro + FishBase</td>
+            <td>21 / 21</td>
+            <td>52 SP</td>
+            <td>5.25 i/h</td>
+            <td>No</td>
+            <td><span class="success-badge">100%</span></td>
+          </tr>
+          <tr>
+            <td>Sprint 5 — Cierre, Accesibilidad y GraphQL</td>
+            <td>14 / 14</td>
+            <td>41 SP</td>
+            <td>3.5 i/h</td>
+            <td>No</td>
+            <td><span class="success-badge">100%</span></td>
+          </tr>
+          <tr style="font-weight:600; background:rgba(0,194,168,0.05)">
+            <td>TOTAL</td>
+            <td>74 / 74</td>
+            <td>203 SP</td>
+            <td>Prom: 10.2 SP/h</td>
+            <td>—</td>
+            <td><span class="success-badge">100%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Charts: Committed vs Completed + Consolidated Burndown -->
+    <div class="charts-row reveal">
+      <div class="chart-card">
+        <h3>Puntos Comprometidos vs Completados</h3>
+        <div class="bar-chart">
+          <div style="display:flex;gap:1rem;margin-bottom:1rem;">
+            <span style="display:flex;align-items:center;gap:0.4rem;font-size:0.73rem;color:var(--text-muted)"><span style="width:12px;height:8px;background:rgba(0,194,168,0.3);border:1px solid rgba(0,194,168,0.5);border-radius:2px;display:inline-block"></span>Comprometido</span>
+            <span style="display:flex;align-items:center;gap:0.4rem;font-size:0.73rem;color:var(--text-muted)"><span style="width:12px;height:8px;background:var(--teal);border-radius:2px;display:inline-block"></span>Completado</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">S1</span>
+            <div class="bar-wrap" style="flex-direction:column;gap:3px">
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-committed" style="width:57.1%"></div><span class="bar-val">12</span></div>
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-completed" style="width:57.1%"></div><span class="bar-val">12</span></div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">S2</span>
+            <div class="bar-wrap" style="flex-direction:column;gap:3px">
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-committed" style="width:52.4%"></div><span class="bar-val">11</span></div>
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-completed" style="width:61.9%"></div><span class="bar-val" style="color:var(--accent)">13</span></div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">S3</span>
+            <div class="bar-wrap" style="flex-direction:column;gap:3px">
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-committed" style="width:66.7%"></div><span class="bar-val">14</span></div>
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-completed" style="width:66.7%"></div><span class="bar-val">14</span></div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">S4</span>
+            <div class="bar-wrap" style="flex-direction:column;gap:3px">
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-committed" style="width:100%"></div><span class="bar-val">21</span></div>
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-completed" style="width:100%"></div><span class="bar-val">21</span></div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">S5</span>
+            <div class="bar-wrap" style="flex-direction:column;gap:3px">
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-committed" style="width:66.7%"></div><span class="bar-val">14</span></div>
+              <div style="display:flex;align-items:center;gap:0.5rem"><div class="bar bar-completed" style="width:66.7%"></div><span class="bar-val">14</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Burn Down Chart Consolidado — Todos los Sprints</h3>
+        <svg class="burndown-svg" viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gradIdeal" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#00C2A8" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#00C2A8" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="gradReal" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FF7043" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#FF7043" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Grid lines -->
+          <line x1="40" y1="10" x2="40" y2="170" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="40" y1="170" x2="410" y2="170" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <!-- Horizontal guides -->
+          <line x1="40" y1="50" x2="410" y2="50" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="90" x2="410" y2="90" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="130" x2="410" y2="130" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="4,4"/>
+          <!-- Axis labels -->
+          <text x="34" y="15" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="rgba(139,189,217,0.6)">74</text>
+          <text x="34" y="55" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="rgba(139,189,217,0.6)">55</text>
+          <text x="34" y="95" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="rgba(139,189,217,0.6)">37</text>
+          <text x="34" y="135" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="rgba(139,189,217,0.6)">18</text>
+          <text x="34" y="173" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="rgba(139,189,217,0.6)">0</text>
+          <!-- Sprint labels -->
+          <text x="85" y="185" text-anchor="middle" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.5)">S1</text>
+          <text x="160" y="185" text-anchor="middle" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.5)">S2</text>
+          <text x="235" y="185" text-anchor="middle" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.5)">S3</text>
+          <text x="310" y="185" text-anchor="middle" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.5)">S4</text>
+          <text x="385" y="185" text-anchor="middle" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.5)">S5</text>
+          <!-- Ideal line (linear from 74 to 0) -->
+          <polygon points="40,10 410,170 410,170 40,170" fill="url(#gradIdeal)" opacity="0.5"/>
+          <polyline points="40,10 410,170" fill="none" stroke="#00C2A8" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.5"/>
+          <!-- Real burndown (based on actual sprint data) 
+               S1:12→0, S2:13→0, S3:14→0, S4:21→0, S5:14→0
+               Cumulative remaining: start=74, after S1=62, S2=49, S3=35, S4=14, S5=0 -->
+          <!-- Map: 74→y=10, 62→y=42, 49→y=76, 35→y=114, 14→y=153, 0→y=170 -->
+          <polygon points="40,10 130,42 205,76 280,114 355,153 410,170 410,170 40,170" fill="url(#gradReal)" opacity="0.4"/>
+          <polyline points="40,10 130,42 205,76 280,114 355,153 410,170" fill="none" stroke="#FF7043" stroke-width="2" stroke-linejoin="round"/>
+          <!-- Dots -->
+          <circle cx="40" cy="10" r="3.5" fill="#FF7043"/>
+          <circle cx="130" cy="42" r="3.5" fill="#FF7043"/>
+          <circle cx="205" cy="76" r="3.5" fill="#FF7043"/>
+          <circle cx="280" cy="114" r="3.5" fill="#FF7043"/>
+          <circle cx="355" cy="153" r="3.5" fill="#FF7043"/>
+          <circle cx="410" cy="170" r="3.5" fill="#FF7043"/>
+          <!-- Legend -->
+          <line x1="50" y1="198" x2="70" y2="198" stroke="#00C2A8" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <text x="74" y="201" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.7)">Ideal</text>
+          <line x1="120" y1="198" x2="140" y2="198" stroke="#FF7043" stroke-width="2"/>
+          <text x="144" y="201" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.7)">Real acumulado</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Sprint Detail Tabs -->
+    <div style="margin-top:3rem" class="reveal">
+      <div class="section-label">Revisiones & Retrospectivas por Sprint</div>
+      <div class="sprint-tabs" style="margin-top:1rem">
+        <button class="sprint-tab active" onclick="showSprint(1,this)">Sprint 1</button>
+        <button class="sprint-tab" onclick="showSprint(2,this)">Sprint 2</button>
+        <button class="sprint-tab" onclick="showSprint(3,this)">Sprint 3</button>
+        <button class="sprint-tab" onclick="showSprint(4,this)">Sprint 4</button>
+        <button class="sprint-tab" onclick="showSprint(5,this)">Sprint 5</button>
+      </div>
+
+      <!-- Sprint 1 -->
+      <div class="sprint-detail active" id="sprint-1">
+        <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:1rem">UI/UX e Infraestructura · 12 tareas · 34 SP · 4 horas</p>
+        <div class="retro-grid">
+          <div class="retro-card strength">
+            <h4>✅ Fortalezas</h4>
+            <ul>
+              <li>Diseño alta fidelidad completado: 24 pantallas en 3 resoluciones</li>
+              <li>Backend desplegado en producción, repositorios configurados</li>
+              <li>Wiki cargada con conocimiento centralizado</li>
+              <li>100% items en Done, velocity estable</li>
+            </ul>
+          </div>
+          <div class="retro-card improve">
+            <h4>⚠️ Puntos a Mejorar</h4>
+            <ul>
+              <li>Alta concentración de tareas en perfiles específicos</li>
+              <li>Criterios de aceptación de desarrollo deben ser más claros</li>
+            </ul>
+            <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--text-muted)"><strong style="color:var(--accent)">Plan:</strong> Documentar en la Wiki conforme avanza la lógica de negocio.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sprint 2 -->
+      <div class="sprint-detail" id="sprint-2">
+        <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:1rem">CRUD Usuarios + Scope Creep · 11 planeadas + 2 scope creep = 13 completadas · 37 SP · 4 horas</p>
+        <div class="retro-grid">
+          <div class="retro-card strength">
+            <h4>✅ Fortalezas</h4>
+            <ul>
+              <li>Absorción del Scope Creep sin comprometer la entrega</li>
+              <li>Integración frontend-backend fluida sin iteraciones adicionales</li>
+              <li>CRUD de usuarios (4 endpoints) cerrados en primera mitad sin bugs críticos</li>
+              <li>100% de los 13 items en Done dentro de 4 horas planificadas</li>
+            </ul>
+          </div>
+          <div class="retro-card improve">
+            <h4>⚠️ Puntos a Mejorar</h4>
+            <ul>
+              <li>Gestión formal del Scope Creep: todo item nuevo requiere aprobación PM</li>
+              <li>Dependencias CRUD → autenticación → UI no mapeadas</li>
+            </ul>
+            <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--text-muted)"><strong style="color:var(--accent)">Plan:</strong> Control de Cambios formal + mapa de dependencias entre épicas en S3.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sprint 3 -->
+      <div class="sprint-detail" id="sprint-3">
+        <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:1rem">FrontEnd + Sincronización Back/Front · 14 tareas · Desviación máxima &lt;5% · 39 SP · 4 horas</p>
+        <div class="retro-grid">
+          <div class="retro-card strength">
+            <h4>✅ Fortalezas</h4>
+            <ul>
+              <li>Cero Scope Creep — mejora directa implementada del Sprint 2</li>
+              <li>Alineación perfecta: curva real ≤5% desviación en todos los tramos</li>
+              <li>Ejecución distribuida uniformemente cada 30 min, sin presión al final</li>
+              <li>100% de los 14 Work Items en Done, incluyendo Panel Administrativo</li>
+            </ul>
+          </div>
+          <div class="retro-card improve">
+            <h4>⚠️ Puntos a Mejorar</h4>
+            <ul>
+              <li>Documentación completada solo al cierre de cada épica</li>
+              <li>Checkpoints visuales intra-sprint para detectar riesgos tempranos</li>
+            </ul>
+            <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--text-muted)"><strong style="color:var(--accent)">Plan:</strong> Factor de riesgo 20% en tareas con dependencias externas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sprint 4 -->
+      <div class="sprint-detail" id="sprint-4">
+        <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:1rem">Exportación + Registro + FishBase · 21 tareas · 3 épicas · 52 SP · 4 horas</p>
+        <div class="retro-grid">
+          <div class="retro-card strength">
+            <h4>✅ Fortalezas</h4>
+            <ul>
+              <li>Paralelismo efectivo hora 1: 6 tareas simultáneas sin bloqueos</li>
+              <li>Épica Exportación cerrada hora 1 (jsPDF + SheetJS + WCAG 2.1 AA)</li>
+              <li>Registro completo con bcrypt, formulario Vue.js, pruebas Jest en verde</li>
+              <li>Sprint cerró 21/21 Done</li>
+            </ul>
+          </div>
+          <div class="retro-card improve">
+            <h4>⚠️ Puntos a Mejorar</h4>
+            <ul>
+              <li>ETL FishBase subestimado (+1.55 h): inconsistencias API ropensci.org</li>
+              <li>Dependencia Vue.js con POST /auth/register no mapeada</li>
+            </ul>
+            <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--text-muted)"><strong style="color:var(--accent)">Plan:</strong> Spike técnico 20 min para APIs externas antes de estimar.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sprint 5 -->
+      <div class="sprint-detail" id="sprint-5">
+        <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:1rem">Cierre, Accesibilidad y GraphQL · 14 tareas · 41 SP · Vue.js + NestJS + GraphQL · 4 horas</p>
+        <div class="retro-grid">
+          <div class="retro-card strength">
+            <h4>✅ Fortalezas</h4>
+            <ul>
+              <li>Accesibilidad completada: Lighthouse 92/100, 0 errores axe, WCAG 2.1 AA</li>
+              <li>FrontEnd cerrado con delta 0.0 hora 2</li>
+              <li>Schema GraphQL consistente, COMPONENTS.md y README actualizados</li>
+              <li>14/14 Done — cierre limpio del proyecto</li>
+            </ul>
+          </div>
+          <div class="retro-card improve">
+            <h4>⚠️ Puntos a Mejorar</h4>
+            <ul>
+              <li>Mutations GraphQL subestimadas: DTOs con validaciones condicionales</li>
+              <li>Carga desbalanceada: Ramón con 29% de SP (límite sugerido: 10 SP)</li>
+            </ul>
+            <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--text-muted)"><strong style="color:var(--accent)">Plan:</strong> Análisis previo de DTOs complejos + límite 10 SP/responsable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- VELOCITY CHART -->
+<section id="velocity">
+  <div class="section-inner">
+    <div class="section-label">03 — Gráfica de Velocidad</div>
+    <h2>Velocity Chart</h2>
+    <p style="color:var(--text-secondary);max-width:580px;margin-bottom:0.5rem">Story Points entregados por sprint. Tendencia de madurez incremental del equipo a lo largo del proyecto.</p>
+
+    <div class="velocity-chart-wrap reveal">
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+        <defs>
+          <linearGradient id="velGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00C2A8" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#00C2A8" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Y-axis grid -->
+        <line x1="60" y1="20" x2="60" y2="260" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <line x1="60" y1="260" x2="670" y2="260" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        
+        <!-- Horizontal guides at 10,20,30,40,52 -->
+        <!-- Y scale: 0→260, 60→y=190, 52→y=156, 40→y=182... let's use: max=60, range=240px -->
+        <!-- y = 260 - (val/60)*240 -->
+        <!-- 10→220, 20→180, 30→140, 40→100, 50→60, 60→20 -->
+        <line x1="60" y1="220" x2="670" y2="220" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="60" y1="180" x2="670" y2="180" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="60" y1="140" x2="670" y2="140" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="60" y1="100" x2="670" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="60" y1="60" x2="670" y2="60" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+
+        <!-- Y labels -->
+        <text x="52" y="224" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="rgba(139,189,217,0.5)">10</text>
+        <text x="52" y="184" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="rgba(139,189,217,0.5)">20</text>
+        <text x="52" y="144" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="rgba(139,189,217,0.5)">30</text>
+        <text x="52" y="104" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="rgba(139,189,217,0.5)">40</text>
+        <text x="52" y="64" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="rgba(139,189,217,0.5)">50</text>
+
+        <!-- Average line y=260-(40.6/60)*240 = 260-162.4 = 97.6 -->
+        <line x1="60" y1="97" x2="670" y2="97" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="8,4"/>
+        <text x="674" y="100" font-family="DM Sans" font-size="9.5" fill="rgba(255,255,255,0.4)">Prom: 40.6</text>
+
+        <!-- SP bars: sprints at x = 120,240,360,480,600  width=80 -->
+        <!-- S1=34 → y=260-(34/60)*240=124 → h=136 -->
+        <!-- S2=37 → y=260-(37/60)*240=112 → h=148 -->
+        <!-- S3=39 → y=260-(39/60)*240=104 → h=156 -->
+        <!-- S4=52 → y=260-(52/60)*240=52  → h=208 -->
+        <!-- S5=41 → y=260-(41/60)*240=96  → h=164 -->
+        
+        <!-- Filled area under line -->
+        <polygon points="160,124 280,112 400,104 520,52 640,96 640,260 520,260 400,260 280,260 160,260" fill="url(#velGrad)"/>
+
+        <!-- Bars -->
+        <rect x="120" y="124" width="80" height="136" rx="6" fill="rgba(0,194,168,0.2)" stroke="rgba(0,194,168,0.3)" stroke-width="1"/>
+        <rect x="240" y="112" width="80" height="148" rx="6" fill="rgba(0,194,168,0.2)" stroke="rgba(0,194,168,0.3)" stroke-width="1"/>
+        <rect x="360" y="104" width="80" height="156" rx="6" fill="rgba(0,194,168,0.2)" stroke="rgba(0,194,168,0.3)" stroke-width="1"/>
+        <rect x="480" y="52" width="80" height="208" rx="6" fill="rgba(255,112,67,0.2)" stroke="rgba(255,112,67,0.4)" stroke-width="1.5"/>
+        <rect x="600" y="96" width="80" height="164" rx="6" fill="rgba(0,194,168,0.2)" stroke="rgba(0,194,168,0.3)" stroke-width="1"/>
+
+        <!-- SP values on bars -->
+        <text x="160" y="116" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#00C2A8" filter="url(#glow)">34</text>
+        <text x="280" y="104" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#00C2A8" filter="url(#glow)">37</text>
+        <text x="400" y="96" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#00C2A8" filter="url(#glow)">39</text>
+        <text x="520" y="44" text-anchor="middle" font-family="Playfair Display" font-size="18" font-weight="900" fill="#FF7043" filter="url(#glow)">52</text>
+        <text x="640" y="88" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#00C2A8" filter="url(#glow)">41</text>
+
+        <!-- Trend line -->
+        <polyline points="160,124 280,112 400,104 520,52 640,96" fill="none" stroke="#00C2A8" stroke-width="2.5" stroke-linejoin="round" filter="url(#glow)"/>
+        <circle cx="160" cy="124" r="5" fill="#00C2A8" filter="url(#glow)"/>
+        <circle cx="280" cy="112" r="5" fill="#00C2A8" filter="url(#glow)"/>
+        <circle cx="400" cy="104" r="5" fill="#00C2A8" filter="url(#glow)"/>
+        <circle cx="520" cy="52" r="6" fill="#FF7043" filter="url(#glow)"/>
+        <circle cx="640" cy="96" r="5" fill="#00C2A8" filter="url(#glow)"/>
+
+        <!-- X labels -->
+        <text x="160" y="280" text-anchor="middle" font-family="DM Sans" font-size="11" font-weight="500" fill="rgba(139,189,217,0.8)">Sprint 1</text>
+        <text x="280" y="280" text-anchor="middle" font-family="DM Sans" font-size="11" font-weight="500" fill="rgba(139,189,217,0.8)">Sprint 2</text>
+        <text x="400" y="280" text-anchor="middle" font-family="DM Sans" font-size="11" font-weight="500" fill="rgba(139,189,217,0.8)">Sprint 3</text>
+        <text x="520" y="280" text-anchor="middle" font-family="DM Sans" font-size="11" font-weight="500" fill="rgba(139,189,217,0.8)">Sprint 4</text>
+        <text x="640" y="280" text-anchor="middle" font-family="DM Sans" font-size="11" font-weight="500" fill="rgba(139,189,217,0.8)">Sprint 5</text>
+
+        <!-- Sub labels -->
+        <text x="160" y="295" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="rgba(139,189,217,0.4)">8.5 SP/h</text>
+        <text x="280" y="295" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="rgba(139,189,217,0.4)">9.25 SP/h</text>
+        <text x="400" y="295" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="rgba(139,189,217,0.4)">9.75 SP/h</text>
+        <text x="520" y="295" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="rgba(255,112,67,0.7)">13.0 SP/h</text>
+        <text x="640" y="295" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="rgba(139,189,217,0.4)">10.25 SP/h</text>
+      </svg>
+
+      <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(0,194,168,0.1)">
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--teal)">40.6 SP</div>
+          <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted)">Velocity Promedio</div>
+        </div>
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--teal)">10.2 SP/h</div>
+          <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted)">Productividad Promedio</div>
+        </div>
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--accent)">52 SP</div>
+          <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted)">Pico — Sprint 4</div>
+        </div>
+        <div style="flex:1;max-width:320px">
+          <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.7">Sprint 4 registró el pico de velocidad (52 SP) por el volumen de 3 épicas en paralelo. Sprint 5 retornó a velocidad sostenible confirmando <strong>40 SP/sprint</strong> como capacidad óptima del equipo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CONCLUSIONES -->
+<section id="conclusiones">
+  <div class="section-inner">
+    <div class="section-label">04 — Conclusiones</div>
+    <h2>Experiencia usando Scrum</h2>
+    <p style="color:var(--text-secondary);max-width:560px;margin-bottom:0">Aprendizajes consolidados del equipo a lo largo de los 5 sprints del proyecto BioMarina.</p>
+
+    <div class="conclusions-grid reveal">
+      <div class="conclusion-card" data-num="01">
+        <h3>Madurez incremental sprint a sprint</h3>
+        <p>Del Scope Creep no controlado del Sprint 2, a la alineación perfecta del Sprint 3 (&lt;5% desviación), hasta el cierre técnico ordenado del Sprint 5. Scrum como marco impulsó la disciplina de planificación y la transparencia del proceso.</p>
+      </div>
+      <div class="conclusion-card" data-num="02">
+        <h3>El mapa de dependencias es clave</h3>
+        <p>Las principales fuentes de retraso fueron tareas cuyas dependencias no se habían mapeado en el Sprint Planning (ETL FishBase, dependencia Vue/Register, mutations GraphQL). Desde el Sprint 3, el mapa de dependencias se convirtió en artefacto obligatorio.</p>
+      </div>
+      <div class="conclusion-card" data-num="03">
+        <h3>El paralelismo define la capacidad real</h3>
+        <p>Los sprints más exitosos (3 y 5) fueron aquellos donde el equipo ejecutó tareas en paralelo desde la primera hora. Coordinar 3-4 tareas simultáneas sin bloqueos resultó ser la variable más importante para cerrar épicas densas en el time-box de 4 horas.</p>
+      </div>
+      <div class="conclusion-card" data-num="04">
+        <h3>Scrum exige disciplina documental</h3>
+        <p>La documentación fue la deuda recurrente del proyecto: se completó principalmente al cierre de cada épica. Integrar documentación continua (Wiki, COMPONENTS.md, README) como criterio del DoD fue la acción correctiva más importante del Sprint 5.</p>
+      </div>
+      <div class="conclusion-card" data-num="05">
+        <h3>Control de Cambios: Scrum no es improvisación</h3>
+        <p>El Sprint 2 demostró que la ausencia de Control de Cambios formal tiene un impacto cuantificable en el burndown. Formalizarlo en Sprint 3 fue la decisión más impactante del ciclo: cero Scope Creep en los tres sprints siguientes.</p>
+      </div>
+      <div class="conclusion-card" data-num="06">
+        <h3>Velocity como indicador de salud</h3>
+        <p>El Velocity Chart refleja con precisión la curva de aprendizaje: crecimiento constante S1–S4, pico en Sprint 4 por volumen excepcional, y retorno a velocidad sostenible en Sprint 5. Esto confirma que <strong>40 SP/sprint</strong> es la capacidad óptima del equipo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>BioMarina</strong> · Catálogo de Especies Marinas · Universidad del Magdalena</p>
+  <p style="margin-top:0.4rem">Especialización en Desarrollo de Software · 2025 · Desarrollado con Scrum</p>
+  <p style="margin-top:0.6rem">
+    <a href="https://bio-marina-ui.vercel.app/" target="_blank" style="color:var(--teal);text-decoration:none;font-weight:500">🌐 bio-marina-ui.vercel.app</a>
+  </p>
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Particles
+const container = document.getElementById('particles');
+for(let i=0;i<18;i++){
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random()*3+1;
+  p.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${Math.random()*100}%;
+    bottom:${Math.random()*20}%;
+    animation-duration:${Math.random()*12+8}s;
+    animation-delay:${Math.random()*10}s;
+  `;
+  container.appendChild(p);
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Scroll top button
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+});
+
+// Sprint tabs
+function showSprint(n, btn) {
+  document.querySelectorAll('.sprint-detail').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.sprint-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sprint-'+n).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
