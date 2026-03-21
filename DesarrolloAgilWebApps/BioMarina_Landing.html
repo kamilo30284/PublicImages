@@ -7,21 +7,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ocean-deep: #021B2E;
-  --ocean-mid: #064663;
-  --ocean-light: #0A7090;
-  --teal: #00C2A8;
-  --teal-glow: rgba(0,194,168,0.15);
-  --sand: #F5EDD8;
-  --sand-muted: #C4B99A;
+  --ocean-deep: #080C2A;
+  --ocean-mid: #0D1540;
+  --ocean-light: #111FA2;
+  --teal: #53CBF3;
+  --teal-glow: rgba(83,203,243,0.13);
+  --sand: #FFDE42;
+  --sand-muted: #C9A800;
   --white: #FFFFFF;
-  --glass: rgba(255,255,255,0.05);
-  --glass-border: rgba(0,194,168,0.2);
-  --text-primary: #F0F7FF;
-  --text-secondary: #8BBDD9;
-  --text-muted: #4A7A96;
-  --accent: #FF7043;
-  --success: #00E676;
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(84,120,255,0.35);
+  --text-primary: #F0F5FF;
+  --text-secondary: #8AAAD8;
+  --text-muted: #3A4A80;
+  --accent: #FFDE42;
+  --success: #53CBF3;
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -41,7 +41,7 @@ nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: rgba(2,27,46,0.85);
+  background: rgba(8,12,42,0.94);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--glass-border);
   padding: 0 2rem;
@@ -101,9 +101,9 @@ nav {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 120%, rgba(6,70,99,0.8) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 80% 30%, rgba(0,194,168,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 20% 60%, rgba(0,100,150,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 120%, rgba(45,31,107,0.85) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 30%, rgba(83,203,243,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 20% 60%, rgba(84,120,255,0.07) 0%, transparent 60%),
     var(--ocean-deep);
 }
 
@@ -225,7 +225,7 @@ h1 .accent { color: var(--teal); }
   text-decoration: none;
   letter-spacing: 0.02em;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 24px rgba(0,194,168,0.3);
+  box-shadow: 0 4px 24px rgba(83,203,243,0.3);
 }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,194,168,0.45); }
 
@@ -276,7 +276,7 @@ h2 {
 
 .section-divider {
   border: none;
-  border-top: 1px solid rgba(0,194,168,0.1);
+  border-top: 1px solid rgba(84,120,255,0.1);
   margin: 0;
 }
 
@@ -297,7 +297,7 @@ h2 {
   padding: 1.8rem;
   transition: border-color 0.3s, background 0.3s;
 }
-.card:hover { border-color: rgba(0,194,168,0.4); background: rgba(0,194,168,0.04); }
+.card:hover { border-color: rgba(83,203,243,0.4); background: rgba(83,203,243,0.04); }
 
 .card-wide { grid-column: 1/-1; }
 
@@ -341,8 +341,8 @@ h2 {
 .tech-tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
-  background: rgba(0,194,168,0.1);
-  border: 1px solid rgba(0,194,168,0.25);
+  background: rgba(84,120,255,0.1);
+  border: 1px solid rgba(84,120,255,0.3);
   color: var(--teal);
   padding: 0.25rem 0.65rem;
   border-radius: 6px;
@@ -394,7 +394,7 @@ h2 {
 
 /* ── SCRUM RESULTS ── */
 #scrum {
-  background: linear-gradient(180deg, var(--ocean-deep) 0%, rgba(6,70,99,0.2) 100%);
+  background: linear-gradient(180deg, var(--ocean-deep) 0%, rgba(84,120,255,0.1) 100%);
 }
 
 .sprints-table-wrap {
@@ -410,7 +410,7 @@ table {
   font-size: 0.88rem;
 }
 thead th {
-  background: rgba(0,194,168,0.08);
+  background: rgba(83,203,243,0.06);
   padding: 0.85rem 1.2rem;
   text-align: left;
   font-size: 0.72rem;
@@ -422,7 +422,7 @@ thead th {
 }
 tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
 tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: rgba(0,194,168,0.03); }
+tbody tr:hover { background: rgba(83,203,243,0.03); }
 tbody td {
   padding: 0.9rem 1.2rem;
   color: var(--text-secondary);
@@ -440,8 +440,8 @@ tbody td:first-child { color: var(--text-primary); font-weight: 500; }
 }
 .scope-badge {
   display: inline-block;
-  background: rgba(255,112,67,0.12);
-  border: 1px solid rgba(255,112,67,0.3);
+  background: rgba(255,222,66,0.12);
+  border: 1px solid rgba(255,222,66,0.3);
   color: var(--accent);
   border-radius: 100px;
   font-size: 0.72rem;
@@ -485,7 +485,7 @@ tbody td:first-child { color: var(--text-primary); font-weight: 500; }
   position: relative;
   transition: width 1s cubic-bezier(0.4,0,0.2,1);
 }
-.bar-committed { background: rgba(0,194,168,0.3); border: 1px solid rgba(0,194,168,0.5); }
+.bar-committed { background: rgba(84,120,255,0.22); border: 1px solid rgba(84,120,255,0.42); }
 .bar-completed { background: var(--teal); }
 .bar-val { font-size: 0.75rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
 
@@ -504,8 +504,8 @@ tbody td:first-child { color: var(--text-primary); font-weight: 500; }
   border-color: rgba(0,230,118,0.2);
 }
 .retro-card.improve {
-  background: rgba(255,112,67,0.04);
-  border-color: rgba(255,112,67,0.2);
+  background: rgba(255,222,66,0.04);
+  border-color: rgba(255,222,66,0.2);
 }
 .retro-card h4 {
   font-size: 0.78rem;
@@ -563,7 +563,7 @@ tbody td:first-child { color: var(--text-primary); font-weight: 500; }
 
 /* ── CONCLUSIONS ── */
 #conclusiones {
-  background: linear-gradient(180deg, rgba(6,70,99,0.15) 0%, var(--ocean-deep) 100%);
+  background: linear-gradient(180deg, rgba(84,120,255,0.07) 0%, var(--ocean-deep) 100%);
 }
 
 .conclusions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
@@ -582,7 +582,7 @@ tbody td:first-child { color: var(--text-primary); font-weight: 500; }
   font-family: 'Playfair Display', serif;
   font-size: 5rem;
   font-weight: 900;
-  color: rgba(0,194,168,0.06);
+  color: rgba(83,203,243,0.06);
   line-height: 1;
   pointer-events: none;
 }
@@ -620,6 +620,31 @@ footer strong { color: var(--teal); }
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+
+/* Electric blue & yellow glow effects */
+.nav-logo { text-shadow: 0 0 28px rgba(83,203,243,0.55); }
+.hero-badge { box-shadow: 0 0 24px rgba(84,120,255,0.3); }
+.btn-primary { background: linear-gradient(135deg, #111FA2, #5478FF) !important; box-shadow: 0 4px 28px rgba(84,120,255,0.55) !important; color: #FFDE42 !important; font-weight: 800 !important; }
+.btn-primary:hover { box-shadow: 0 8px 42px rgba(84,120,255,0.75) !important; transform: translateY(-3px) !important; }
+.stat-pill .num { text-shadow: 0 0 20px rgba(83,203,243,0.6); }
+.success-badge { background: rgba(83,203,243,0.12); border-color: rgba(83,203,243,0.45); color: #53CBF3; }
+.scope-badge { background: rgba(255,222,66,0.12); border-color: rgba(255,222,66,0.45); color: #FFDE42; }
+.tech-tag { background: rgba(84,120,255,0.14); border-color: rgba(84,120,255,0.38); color: #8AABFF; }
+.avatar { border-color: rgba(83,203,243,0.8); color: #53CBF3; text-shadow: 0 0 14px rgba(83,203,243,0.55); background: rgba(84,120,255,0.18) !important; }
+.retro-card.strength { background: rgba(83,203,243,0.05); border-color: rgba(83,203,243,0.22); }
+.retro-card.strength h4 { color: #53CBF3; }
+.retro-card.improve { background: rgba(255,222,66,0.05); border-color: rgba(255,222,66,0.22); }
+.retro-card.improve h4 { color: #FFDE42; }
+body { background: radial-gradient(ellipse 100% 50% at 50% 0%, rgba(17,31,162,0.25) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 90% 80%, rgba(83,203,243,0.07) 0%, transparent 60%), #080C2A; }
+.section-label::before { background: linear-gradient(90deg, #5478FF, #53CBF3); }
+.section-label { color: #53CBF3; }
+h1 .accent { color: #FFDE42; text-shadow: 0 0 30px rgba(255,222,66,0.4); }
+.nav-links a:hover { color: #53CBF3; background: rgba(83,203,243,0.1); }
+.scroll-top { background: linear-gradient(135deg, #5478FF, #111FA2); color: #FFDE42; box-shadow: 0 4px 20px rgba(84,120,255,0.5); }
+.card:hover { border-color: rgba(83,203,243,0.4) !important; background: rgba(83,203,243,0.04) !important; }
+.sprint-tab.active { background: linear-gradient(135deg, #111FA2, #5478FF) !important; color: #FFDE42 !important; border-color: #5478FF !important; }
+.conclusion-card::before { color: rgba(83,203,243,0.07) !important; }
 
 /* Scroll to top */
 .scroll-top {
@@ -875,7 +900,7 @@ footer strong { color: var(--teal); }
         <h3>Puntos Comprometidos vs Completados</h3>
         <div class="bar-chart">
           <div style="display:flex;gap:1rem;margin-bottom:1rem;">
-            <span style="display:flex;align-items:center;gap:0.4rem;font-size:0.73rem;color:var(--text-muted)"><span style="width:12px;height:8px;background:rgba(0,194,168,0.3);border:1px solid rgba(0,194,168,0.5);border-radius:2px;display:inline-block"></span>Comprometido</span>
+            <span style="display:flex;align-items:center;gap:0.4rem;font-size:0.73rem;color:var(--text-muted)"><span style="width:12px;height:8px;background:rgba(83,203,243,0.3);border:1px solid rgba(83,203,243,0.5);border-radius:2px;display:inline-block"></span>Comprometido</span>
             <span style="display:flex;align-items:center;gap:0.4rem;font-size:0.73rem;color:var(--text-muted)"><span style="width:12px;height:8px;background:var(--teal);border-radius:2px;display:inline-block"></span>Completado</span>
           </div>
           <div class="bar-row">
@@ -921,12 +946,12 @@ footer strong { color: var(--teal); }
         <svg class="burndown-svg" viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="gradIdeal" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#00C2A8" stop-opacity="0.15"/>
-              <stop offset="100%" stop-color="#00C2A8" stop-opacity="0"/>
+              <stop offset="0%" stop-color="#53CBF3" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#53CBF3" stop-opacity="0"/>
             </linearGradient>
             <linearGradient id="gradReal" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#FF7043" stop-opacity="0.2"/>
-              <stop offset="100%" stop-color="#FF7043" stop-opacity="0"/>
+              <stop offset="0%" stop-color="#FFDE42" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#FFDE42" stop-opacity="0"/>
             </linearGradient>
           </defs>
           <!-- Grid lines -->
@@ -950,24 +975,24 @@ footer strong { color: var(--teal); }
           <text x="385" y="185" text-anchor="middle" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.5)">S5</text>
           <!-- Ideal line (linear from 74 to 0) -->
           <polygon points="40,10 410,170 410,170 40,170" fill="url(#gradIdeal)" opacity="0.5"/>
-          <polyline points="40,10 410,170" fill="none" stroke="#00C2A8" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.5"/>
+          <polyline points="40,10 410,170" fill="none" stroke="#53CBF3" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.5"/>
           <!-- Real burndown (based on actual sprint data) 
                S1:12→0, S2:13→0, S3:14→0, S4:21→0, S5:14→0
                Cumulative remaining: start=74, after S1=62, S2=49, S3=35, S4=14, S5=0 -->
           <!-- Map: 74→y=10, 62→y=42, 49→y=76, 35→y=114, 14→y=153, 0→y=170 -->
           <polygon points="40,10 130,42 205,76 280,114 355,153 410,170 410,170 40,170" fill="url(#gradReal)" opacity="0.4"/>
-          <polyline points="40,10 130,42 205,76 280,114 355,153 410,170" fill="none" stroke="#FF7043" stroke-width="2" stroke-linejoin="round"/>
+          <polyline points="40,10 130,42 205,76 280,114 355,153 410,170" fill="none" stroke="#FFDE42" stroke-width="2.5" stroke-linejoin="round"/>
           <!-- Dots -->
-          <circle cx="40" cy="10" r="3.5" fill="#FF7043"/>
-          <circle cx="130" cy="42" r="3.5" fill="#FF7043"/>
-          <circle cx="205" cy="76" r="3.5" fill="#FF7043"/>
-          <circle cx="280" cy="114" r="3.5" fill="#FF7043"/>
-          <circle cx="355" cy="153" r="3.5" fill="#FF7043"/>
-          <circle cx="410" cy="170" r="3.5" fill="#FF7043"/>
+          <circle cx="40" cy="10" r="3.5" fill="#FFDE42"/>
+          <circle cx="130" cy="42" r="3.5" fill="#FFDE42"/>
+          <circle cx="205" cy="76" r="3.5" fill="#FFDE42"/>
+          <circle cx="280" cy="114" r="3.5" fill="#FFDE42"/>
+          <circle cx="355" cy="153" r="3.5" fill="#FFDE42"/>
+          <circle cx="410" cy="170" r="3.5" fill="#FFDE42"/>
           <!-- Legend -->
-          <line x1="50" y1="198" x2="70" y2="198" stroke="#00C2A8" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <line x1="50" y1="198" x2="70" y2="198" stroke="#53CBF3" stroke-width="1.5" stroke-dasharray="5,4"/>
           <text x="74" y="201" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.7)">Ideal</text>
-          <line x1="120" y1="198" x2="140" y2="198" stroke="#FF7043" stroke-width="2"/>
+          <line x1="120" y1="198" x2="140" y2="198" stroke="#FFDE42" stroke-width="2"/>
           <text x="144" y="201" font-family="DM Sans" font-size="8.5" fill="rgba(139,189,217,0.7)">Real acumulado</text>
         </svg>
       </div>
@@ -1120,8 +1145,8 @@ footer strong { color: var(--teal); }
       <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
         <defs>
           <linearGradient id="velGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#00C2A8" stop-opacity="0.25"/>
-            <stop offset="100%" stop-color="#00C2A8" stop-opacity="0"/>
+            <stop offset="0%" stop-color="#53CBF3" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#53CBF3" stop-opacity="0"/>
           </linearGradient>
           <filter id="glow">
             <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -1165,26 +1190,26 @@ footer strong { color: var(--teal); }
         <polygon points="160,124 280,112 400,104 520,52 640,96 640,260 520,260 400,260 280,260 160,260" fill="url(#velGrad)"/>
 
         <!-- Bars -->
-        <rect x="120" y="124" width="80" height="136" rx="6" fill="rgba(0,194,168,0.2)" stroke="rgba(0,194,168,0.3)" stroke-width="1"/>
-        <rect x="240" y="112" width="80" height="148" rx="6" fill="rgba(0,194,168,0.2)" stroke="rgba(0,194,168,0.3)" stroke-width="1"/>
-        <rect x="360" y="104" width="80" height="156" rx="6" fill="rgba(0,194,168,0.2)" stroke="rgba(0,194,168,0.3)" stroke-width="1"/>
-        <rect x="480" y="52" width="80" height="208" rx="6" fill="rgba(255,112,67,0.2)" stroke="rgba(255,112,67,0.4)" stroke-width="1.5"/>
-        <rect x="600" y="96" width="80" height="164" rx="6" fill="rgba(0,194,168,0.2)" stroke="rgba(0,194,168,0.3)" stroke-width="1"/>
+        <rect x="120" y="124" width="80" height="136" rx="6" fill="rgba(83,203,243,0.2)" stroke="rgba(83,203,243,0.3)" stroke-width="1"/>
+        <rect x="240" y="112" width="80" height="148" rx="6" fill="rgba(83,203,243,0.2)" stroke="rgba(83,203,243,0.3)" stroke-width="1"/>
+        <rect x="360" y="104" width="80" height="156" rx="6" fill="rgba(83,203,243,0.2)" stroke="rgba(83,203,243,0.3)" stroke-width="1"/>
+        <rect x="480" y="52" width="80" height="208" rx="6" fill="rgba(255,222,66,0.2)" stroke="rgba(255,222,66,0.45)" stroke-width="1.5"/>
+        <rect x="600" y="96" width="80" height="164" rx="6" fill="rgba(83,203,243,0.2)" stroke="rgba(83,203,243,0.3)" stroke-width="1"/>
 
         <!-- SP values on bars -->
-        <text x="160" y="116" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#00C2A8" filter="url(#glow)">34</text>
-        <text x="280" y="104" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#00C2A8" filter="url(#glow)">37</text>
-        <text x="400" y="96" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#00C2A8" filter="url(#glow)">39</text>
-        <text x="520" y="44" text-anchor="middle" font-family="Playfair Display" font-size="18" font-weight="900" fill="#FF7043" filter="url(#glow)">52</text>
-        <text x="640" y="88" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#00C2A8" filter="url(#glow)">41</text>
+        <text x="160" y="116" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#53CBF3" filter="url(#glow)">34</text>
+        <text x="280" y="104" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#53CBF3" filter="url(#glow)">37</text>
+        <text x="400" y="96" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#53CBF3" filter="url(#glow)">39</text>
+        <text x="520" y="44" text-anchor="middle" font-family="Playfair Display" font-size="18" font-weight="900" fill="#FFDE42" filter="url(#glow)">52</text>
+        <text x="640" y="88" text-anchor="middle" font-family="Playfair Display" font-size="16" font-weight="700" fill="#53CBF3" filter="url(#glow)">41</text>
 
         <!-- Trend line -->
-        <polyline points="160,124 280,112 400,104 520,52 640,96" fill="none" stroke="#00C2A8" stroke-width="2.5" stroke-linejoin="round" filter="url(#glow)"/>
-        <circle cx="160" cy="124" r="5" fill="#00C2A8" filter="url(#glow)"/>
-        <circle cx="280" cy="112" r="5" fill="#00C2A8" filter="url(#glow)"/>
-        <circle cx="400" cy="104" r="5" fill="#00C2A8" filter="url(#glow)"/>
-        <circle cx="520" cy="52" r="6" fill="#FF7043" filter="url(#glow)"/>
-        <circle cx="640" cy="96" r="5" fill="#00C2A8" filter="url(#glow)"/>
+        <polyline points="160,124 280,112 400,104 520,52 640,96" fill="none" stroke="#53CBF3" stroke-width="2.5" stroke-linejoin="round" filter="url(#glow)"/>
+        <circle cx="160" cy="124" r="5" fill="#53CBF3" filter="url(#glow)"/>
+        <circle cx="280" cy="112" r="5" fill="#53CBF3" filter="url(#glow)"/>
+        <circle cx="400" cy="104" r="5" fill="#53CBF3" filter="url(#glow)"/>
+        <circle cx="520" cy="52" r="6" fill="#FFDE42" filter="url(#glow)"/>
+        <circle cx="640" cy="96" r="5" fill="#53CBF3" filter="url(#glow)"/>
 
         <!-- X labels -->
         <text x="160" y="280" text-anchor="middle" font-family="DM Sans" font-size="11" font-weight="500" fill="rgba(139,189,217,0.8)">Sprint 1</text>
@@ -1201,7 +1226,7 @@ footer strong { color: var(--teal); }
         <text x="640" y="295" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="rgba(139,189,217,0.4)">10.25 SP/h</text>
       </svg>
 
-      <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(0,194,168,0.1)">
+      <div style="display:flex;gap:2rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(84,120,255,0.1)">
         <div>
           <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--teal)">40.6 SP</div>
           <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted)">Velocity Promedio</div>
