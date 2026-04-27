@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BillingTool — In-house Billing Infrastructure</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #060912;
+            --surface: #0d1220;
+            --surface2: #141929;
+            --border: rgba(99, 130, 255, 0.12);
+            --accent: #6382ff;
+            --accent2: #38d9c0;
+            --accent3: #a78bfa;
+            --text: #e8eaf5;
+            --muted: #7a82a8;
+            --glow: rgba(99, 130, 255, 0.18);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5vw;
+            height: 68px;
+            background: rgba(6, 9, 18, 0.55);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s;
+        }
+
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--accent), #4f6bff);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1.4rem;
+            border-radius: 99px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 6vw 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 50% -10%, rgba(99, 130, 255, 0.22) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 30% at 85% 60%, rgba(56, 217, 192, 0.10) 0%, transparent 60%),
+                radial-gradient(ellipse 30% 25% at 10% 70%, rgba(167, 139, 250, 0.10) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(99, 130, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 130, 255, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 1rem;
+            border-radius: 99px;
+            border: 1px solid rgba(99, 130, 255, 0.3);
+            background: rgba(99, 130, 255, 0.08);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            animation: fadeUp 0.7s ease both;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent2);
+            box-shadow: 0 0 6px var(--accent2);
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            line-height: 1.0;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.8s 0.1s ease both;
+        }
+
+        h1 .gradient {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--accent3) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            font-weight: 300;
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #4f6bff);
+            color: #fff;
+            border: none;
+            padding: 0.85rem 2.2rem;
+            border-radius: 99px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(99, 130, 255, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 45px rgba(99, 130, 255, 0.4);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 0.85rem 2.2rem;
+            border-radius: 99px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            background: rgba(99, 130, 255, 0.06);
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            padding: 100px 6vw;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-lead {
+            color: var(--muted);
+            font-size: 1.05rem;
+            max-width: 560px;
+            margin-bottom: 3.5rem;
+        }
+
+        /* ── GOLD STANDARD (ANGULAR) ── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .feat-card {
+            background: var(--surface);
+            padding: 2rem 2rem 2rem;
+            transition: background 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feat-card:hover {
+            background: var(--surface2);
+        }
+
+        .feat-card:hover::before {
+            opacity: 1;
+        }
+
+        .feat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon-blue {
+            background: rgba(99, 130, 255, 0.15);
+        }
+
+        .icon-teal {
+            background: rgba(56, 217, 192, 0.12);
+        }
+
+        .icon-purple {
+            background: rgba(167, 139, 250, 0.12);
+        }
+
+        .feat-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .feat-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .feat-list li {
+            font-size: 0.875rem;
+            color: var(--muted);
+            padding-left: 1.1rem;
+            position: relative;
+        }
+
+        .feat-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 0.75rem;
+            top: 0.05em;
+        }
+
+        /* ── DJANGO ── */
+        .django-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 3.5rem;
+        }
+
+        /* ── ARCHITECTURE ── */
+        .arch-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+        }
+
+        .arch-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .arch-node {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            position: relative;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .arch-node:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .arch-node .node-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .arch-node h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .arch-node p {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .arch-bullets {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+
+        .arch-bullet {
+            display: flex;
+            gap: 0.9rem;
+            align-items: flex-start;
+        }
+
+        .arch-bullet .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent2);
+            flex-shrink: 0;
+            margin-top: 0.5rem;
+            box-shadow: 0 0 6px var(--accent2);
+        }
+
+        .arch-bullet p {
+            font-size: 0.875rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .arch-bullet strong {
+            color: var(--text);
+            font-weight: 500;
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        /* ── COST TABLE ── */
+        .costs-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .cost-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .cost-card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+        }
+
+        .cost-card-header.investment {
+            color: var(--accent);
+        }
+
+        .cost-card-header.running {
+            color: var(--accent2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            border-bottom: 1px solid rgba(99, 130, 255, 0.07);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .cost-row-total td {
+            font-weight: 600;
+            color: var(--text);
+            background: rgba(99, 130, 255, 0.05);
+        }
+
+        td:last-child {
+            text-align: right;
+            color: var(--muted);
+        }
+
+        .cost-row-total td:last-child {
+            color: var(--accent);
+        }
+
+        /* ── VALUE PROPS ── */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .value-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.75rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .value-card:hover {
+            border-color: rgba(99, 130, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .value-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+            color: var(--text);
+        }
+
+        .value-card p {
+            font-size: 0.875rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ── COMPONENTS TABLE ── */
+        .comp-table-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 3rem;
+        }
+
+        .comp-table-wrap table td {
+            color: var(--text);
+        }
+
+        .comp-table-wrap table td:nth-child(2) {
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .comp-table-wrap table td:nth-child(3) {
+            color: var(--muted);
+        }
+
+        .comp-table-wrap thead td {
+            background: rgba(99, 130, 255, 0.07);
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 3rem 6vw;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .footer-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        /* ── THANK YOU ── */
+        .thankyou {
+            text-align: center;
+            padding: 120px 6vw;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thankyou-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(99, 130, 255, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .thankyou h2 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            letter-spacing: -0.04em;
+        }
+
+        .thankyou p {
+            color: var(--muted);
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .costs-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .arch-bullets {
+                grid-template-columns: 1fr;
+            }
+
+            .arch-diagram {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav style="display: flex; align-items: center; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 5px;">
+            <span class="nav-logo">BillingTool</span>
+            <img src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Logo.png" alt="Logo" width="25"
+                height="25">
+        </div>
+
+        <ul class="nav-links" style="display: flex; list-style: none; gap: 15px; margin: 0; padding: 0;">
+            <li><a href="#angular">Angular</a></li>
+            <li><a href="#django">Django</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#costs">Costs</a></li>
+        </ul>
+
+        <button class="nav-cta">Get Started</button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" style="max-width:100%;padding-top:160px;">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-badge">In-house Development</div>
+        <h1>
+            <span class="gradient">BillingTool</span>
+        </h1>
+        <p class="hero-sub">
+            In-house development for complete technological independence. Designed to scale, configure, and operate
+            outside platform limitations.
+        </p>
+        <div class="hero-actions">
+            <button class="btn-primary">Explore Architecture</button>
+            <a href="#costs" class="btn-ghost">View Cost Model</a>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ANGULAR SECTION -->
+    <section id="angular" style="padding-top:100px;">
+        <div class="reveal">
+            <div class="section-label">Frontend</div>
+            <img src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Angular.png" alt="Logo"
+                width="120" height="30">
+            <h2>Gold standard in financial developments</h2>
+            <p class="section-lead">Angular powers the frontend with enterprise-grade security, robust architecture, and
+                long-term stability.</p>
+        </div>
+        <div class="features-grid reveal">
+            <div class="feat-card">
+                <div class="feat-icon icon-blue">🔐</div>
+                <h3>Security</h3>
+                <ul class="feat-list">
+                    <li>Security (XSS - Cross-Site Scripting)</li>
+                    <li>Strict TypeScript integration</li>
+                    <li>Clean Architecture / Micro-frontends</li>
+                </ul>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon icon-teal">⚙️</div>
+                <h3>Data &amp; Logic</h3>
+                <ul class="feat-list">
+                    <li>Robust Dependency Injection system (DI)</li>
+                    <li>Advanced State Management (RxJS)</li>
+                    <li>Powerful Reactive Forms (Complex validations)</li>
+                </ul>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon icon-purple">🛠️</div>
+                <h3>Tools &amp; Support</h3>
+                <ul class="feat-list">
+                    <li>Modular design (NgModules / Standalone)</li>
+                    <li>Enterprise-grade CLI &amp; Tooling</li>
+                    <li>Long-term Google support (LTS)</li>
+                    <li>Comprehensive Testing Utilities</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- DJANGO SECTION -->
+    <section id="django">
+        <div class="reveal">
+            <div class="section-label">Backend</div>
+            <img src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/Django.png" alt="Logo" width="30"
+                height="30">
+            <h2>Built for scale &amp; compliance</h2>
+            <p class="section-lead">Django delivers the backend robustness needed for global financial operations across
+                130 countries.</p>
+        </div>
+        <div class="django-grid reveal">
+            <div class="feat-card">
+                <div class="feat-icon icon-blue">🏗️</div>
+                <h3>Architecture &amp; Scalability</h3>
+                <ul class="feat-list">
+                    <li>Clean Architecture (Hexagonal)</li>
+                    <li>Built-in Admin Interface</li>
+                    <li>Microservices Ready</li>
+                </ul>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon icon-teal">🔒</div>
+                <h3>Security &amp; Compliance</h3>
+                <ul class="feat-list">
+                    <li>Zero Trust Security Core</li>
+                    <li>Robust ORM &amp; Data Safety</li>
+                    <li>Granular Access Control</li>
+                </ul>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon icon-purple">⚡</div>
+                <h3>Efficiency &amp; Orchestration</h3>
+                <ul class="feat-list">
+                    <li>Kubernetes (K8s) Optimization</li>
+                    <li>Asynchronous Task Processing (Celery)</li>
+                    <li>Cloud-Native / Serverless Friendly</li>
+                </ul>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon icon-blue">📦</div>
+                <h3>Support &amp; Stability</h3>
+                <ul class="feat-list">
+                    <li>Enterprise-grade Maturity</li>
+                    <li>Long-term Support (LTS)</li>
+                    <li>Automated Testing Suite</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARCHITECTURE SECTION -->
+    <section id="architecture" style="max-width:100%;padding-left:6vw;padding-right:6vw;">
+        <div style="max-width:1200px;margin:0 auto;">
+            <div class="reveal">
+                <div class="section-label">Infrastructure</div>
+                <h2>Billing Tool Architecture</h2>
+                <p class="section-lead">A cloud-native, multi-layer infrastructure engineered for global scale,
+                    isolation, and resilience.</p>
+            </div>
+            <div class="arch-section reveal">
+                <div class="arch-diagram">
+                    <div class="arch-node">
+                        <div class="node-icon">💻</div>
+                        <h4>Frontend</h4>
+                        <p>Upload / Validate / Approve</p>
+                    </div>
+                    <div class="arch-node">
+                        <div class="node-icon">⚙️</div>
+                        <h4>Application</h4>
+                        <p>Backend Processing</p>
+                    </div>
+                    <div class="arch-node">
+                        <div class="node-icon">🗄️</div>
+                        <h4>Data</h4>
+                        <p>Database + Integration</p>
+                    </div>
+                    <div class="arch-node">
+                        <div class="node-icon">🔒</div>
+                        <h4>Security</h4>
+                        <p>Storage, Logs, Security</p>
+                    </div>
+                    <div class="arch-node">
+                        <div class="node-icon">👥</div>
+                        <h4>Users</h4>
+                        <p>Security Application</p>
+                    </div>
+                    <div class="arch-node">
+                        <div class="node-icon">🐙</div>
+                        <h4>GitHub</h4>
+                        <p>Cluster &amp; Nodes</p>
+                    </div>
+                </div>
+                <div class="arch-bullets">
+                    <div class="arch-bullet">
+                        <div class="dot"></div>
+                        <div>
+                            <strong>Frontend: Micro-frontend (MFE) Strategy</strong>
+                            <p>Implements a Shell container enabling horizontal scaling of development teams and
+                                independent deployment of regional features.</p>
+                        </div>
+                    </div>
+                    <div class="arch-bullet">
+                        <div class="dot"></div>
+                        <div>
+                            <strong>Backend: Kubernetes Horizontal Scaling</strong>
+                            <p>Leverages K8s to scale microservices via Pod replicas, ensuring high availability and
+                                performance across 130 countries.</p>
+                        </div>
+                    </div>
+                    <div class="arch-bullet">
+                        <div class="dot"></div>
+                        <div>
+                            <strong>Infrastructure: Isolated Node Pools</strong>
+                            <p>Physically separates heavy batch processes (Provisioning) from daily user queries,
+                                optimizing costs via elastic auto-scaling.</p>
+                        </div>
+                    </div>
+                    <div class="arch-bullet">
+                        <div class="dot"></div>
+                        <div>
+                            <strong>Data Governance: Regional + Centralized</strong>
+                            <p>Combines Regional PaaS Databases for low-latency operations with a Centralized Data
+                                Warehouse for unified global administration and reporting.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPERATIONAL EXCELLENCE -->
+    <section style="max-width:100%;padding-left:6vw;padding-right:6vw;">
+        <div style="max-width:1200px;margin:0 auto;">
+            <div class="reveal">
+                <div class="section-label">LATAM Billing Tool — Cloud-Based Built Solution</div>
+                <h2>Operational Excellence</h2>
+                <p class="section-lead">Cost is driven by components. Each layer is optimized for resilience,
+                    performance, and independence.</p>
+            </div>
+
+            <!-- Component table -->
+            <div class="comp-table-wrap reveal">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Component</td>
+                            <td>Example</td>
+                            <td>Simple Explanation</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🖥️ Infrastructure</td>
+                            <td>Cluster / Nodes</td>
+                            <td>Where system runs</td>
+                        </tr>
+                        <tr>
+                            <td>💻 Application</td>
+                            <td>Frontend / Backend</td>
+                            <td>What users interact and business logic runs</td>
+                        </tr>
+                        <tr>
+                            <td>🗄️ Data</td>
+                            <td>Database / D365 connection</td>
+                            <td>Storage &amp; connections</td>
+                        </tr>
+                        <tr>
+                            <td>🔒 Security</td>
+                            <td>Access / Logs / Backup</td>
+                            <td>Access &amp; data protection</td>
+                        </tr>
+                        <tr>
+                            <td>📁 Storage</td>
+                            <td>Files / Traffic</td>
+                            <td>Space &amp; capacity — Files &amp; traffic</td>
+                        </tr>
+                        <tr>
+                            <td>👥 Development</td>
+                            <td>Team</td>
+                            <td>Build &amp; maintenance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="value-grid reveal" style="margin-top:2.5rem;">
+                <div class="value-card">
+                    <h4>Elastic Cost Optimization</h4>
+                    <p>Scales infrastructure resources up only during peak billing cycles and down during idle periods,
+                        ensuring you only pay for what you use.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Global Fault Isolation</h4>
+                    <p>Prevents regional errors from affecting the entire system; if one service or node fails in a
+                        specific country, the other 129 remain fully operational.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Rapid Regional Deployment</h4>
+                    <p>Enables independent releases for specific markets (e.g., new tax laws in Peru) without requiring
+                        a full system redeploy or risking global stability.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Linear Scalability</h4>
+                    <p>Allows for seamless expansion from 1 to 130 countries by simply adding nodes and databases,
+                        eliminating the need for expensive code refactoring in the future.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COSTS SECTION -->
+    <section id="costs" style="max-width:100%;padding-left:6vw;padding-right:6vw;">
+        <div style="max-width:1200px;margin:0 auto;">
+            <div class="reveal">
+                <div class="section-label">Investment</div>
+                <h2>Cost Breakdown (Full Model)</h2>
+                <p class="section-lead">A transparent view of the one-time investment and predictable monthly running
+                    costs.</p>
+            </div>
+            <div class="costs-wrapper reveal">
+                <div class="cost-card">
+                    <div class="cost-card-header investment">Investment (One Time)</div>
+                    <table>
+                        <tr>
+                            <td>Infrastructure setup</td>
+                            <td>€14.28K</td>
+                        </tr>
+                        <tr>
+                            <td>Initial setup &amp; tools</td>
+                            <td>€0.20K</td>
+                        </tr>
+                        <tr class="cost-row-total">
+                            <td>Total Investment</td>
+                            <td>€14.48K</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="cost-card">
+                    <div class="cost-card-header running">Running Cost (Monthly)</div>
+                    <table>
+                        <tr>
+                            <td>Infrastructure</td>
+                            <td>€2.38K</td>
+                        </tr>
+                        <tr>
+                            <td>Application</td>
+                            <td>€1.50K</td>
+                        </tr>
+                        <tr>
+                            <td>Security</td>
+                            <td>€1.50K</td>
+                        </tr>
+                        <tr>
+                            <td>Storage &amp; Traffic</td>
+                            <td>€0.05K</td>
+                        </tr>
+                        <tr>
+                            <td>Development</td>
+                            <td>€9.98K</td>
+                        </tr>
+                        <tr class="cost-row-total">
+                            <td>Total Monthly Cost</td>
+                            <td>€15.41K</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="value-grid reveal">
+                <div class="value-card">
+                    <h4>Business Domain Mastery</h4>
+                    <p>BillingTool ensures deep alignment with local business rules and entity-specific logic.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Zero Cost Reaction</h4>
+                    <p>In-house team can react immediately without waiting for a vendor's roadmap or budget approval.
+                    </p>
+                </div>
+                <div class="value-card">
+                    <h4>Technological Independence</h4>
+                    <p>Powered by an architecture that ensures local independence within our global system.</p>
+                </div>
+                <div class="value-card">
+                    <h4>Data Security &amp; Compliance</h4>
+                    <p>Reduces the compliance risks associated with third-party data processing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THANK YOU -->
+    <div class="thankyou">
+        <div class="thankyou-bg"></div>
+        <h2 class="reveal">Thank you!</h2>
+        <p class="reveal">BillingTool — Built for independence. Designed for scale.</p>
+
+    </div>
+    <video class="d-block" style="width: 100vw; height: 30vh; object-fit: cover; object-position: center;"
+        preload="auto" autoplay loop muted playsinline>
+        <source src="https://raw.githubusercontent.com/kamilo30284/PublicImages/main/banner_low.mp4" type="video/mp4">
+    </video>
+
+    <footer>
+        <span class="footer-logo">BillingTool</span>
+        <p>In-house development for complete technological independence.</p>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach((el, i) => {
+            el.style.transitionDelay = `${(i % 3) * 0.08}s`;
+            observer.observe(el);
+        });
+
+        // Nav transparency on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) {
+                nav.style.background = 'rgba(6,9,18,0.88)';
+            } else {
+                nav.style.background = 'rgba(6,9,18,0.55)';
+            }
+        });
+    </script>
+</body>
+
+</html>
